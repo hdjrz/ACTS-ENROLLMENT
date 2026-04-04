@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACTS Student Portal — Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #2e78b8;
+  --red: #d97a45;
+  --blue-mid: #3f8ccc;
+  --blue-lt: #75acd8;
+  --blue-dk: #235c90;
+  --red-dk: #b96538;
+  --white: #ffffff;
+  --off: #f4f8fc;
+  --cream: #fcf5ee;
+  --text: #223548;
+  --muted: #62778b;
+  --border: #d4e0ea;
+  --accent-soft: #f1c7ad;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{font-family:'DM Sans',sans-serif;background:var(--blue-dk);color:var(--text);display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden;}
+
+/* ── Background pattern ── */
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(circle at 20% 80%,rgba(217,122,69,.12) 0%,transparent 50%),
+  radial-gradient(circle at 80% 20%,rgba(46,120,184,.15) 0%,transparent 50%),
+  radial-gradient(circle at 50% 50%,rgba(255,255,255,.03) 0%,transparent 70%);
+  z-index:0;}
+body::after{content:'';position:fixed;top:-50%;right:-30%;width:800px;height:800px;background:rgba(255,255,255,.02);border-radius:50%;z-index:0;}
+
+/* ── Login container ── */
+.login-wrapper{position:relative;z-index:1;width:100%;max-width:440px;padding:20px;}
+
+.login-card{background:var(--white);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.06);overflow:hidden;animation:cardIn .5s ease both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+/* ── Header ── */
+.login-header{background:var(--blue-dk);padding:36px 36px 30px;text-align:center;position:relative;overflow:hidden;}
+.login-header::before{content:'';position:absolute;right:-40px;top:-40px;width:160px;height:160px;background:rgba(255,255,255,.04);border-radius:50%;}
+.login-header::after{content:'';position:absolute;left:-20px;bottom:-50px;width:120px;height:120px;background:rgba(217,122,69,.08);border-radius:50%;}
+
+.brand-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px;position:relative;z-index:1;}
+.brand-icon{width:46px;height:46px;background:var(--red);border-radius:13px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:17px;color:#fff;box-shadow:0 6px 20px rgba(217,122,69,.35);flex-shrink:0;}
+.brand-label strong{display:block;font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:#fff;letter-spacing:-.4px;line-height:1.2;}
+.brand-label span{font-size:11px;color:var(--blue-lt);letter-spacing:.8px;text-transform:uppercase;}
+
+.login-subtitle{font-size:13px;color:var(--blue-lt);position:relative;z-index:1;line-height:1.5;}
+
+/* ── Form body ── */
+.login-body{padding:32px 36px 28px;}
+
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
+.form-input-wrap{position:relative;}
+.form-input-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);transition:color .15s;}
+.form-input{width:100%;padding:11px 14px 11px 40px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--off);outline:none;transition:border-color .2s,background .2s,box-shadow .2s;}
+.form-input::placeholder{color:var(--muted);font-weight:400;}
+.form-input:focus{border-color:var(--blue);background:var(--white);box-shadow:0 0 0 3px rgba(46,120,184,.1);}
+.form-input:focus + svg,.form-input:focus ~ svg{color:var(--blue);}
+
+.password-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px;color:var(--muted);transition:color .15s;}
+.password-toggle:hover{color:var(--blue);}
+
+.form-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+.checkbox-wrap{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12.5px;color:var(--muted);user-select:none;}
+.checkbox-wrap input{accent-color:var(--blue);width:15px;height:15px;cursor:pointer;}
+.forgot-link{font-size:12.5px;color:var(--blue);font-weight:500;text-decoration:none;transition:color .15s;}
+.forgot-link:hover{color:var(--blue-dk);text-decoration:underline;}
+
+.login-btn{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s,transform .1s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden;}
+.login-btn:hover{background:var(--blue-dk);box-shadow:0 6px 20px rgba(35,92,144,.25);}
+.login-btn:active{transform:scale(.985);}
+.login-btn.loading{pointer-events:none;opacity:.85;}
+.login-btn.loading .btn-text{opacity:0;}
+.login-btn .btn-spinner{position:absolute;width:20px;height:20px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none;}
+.login-btn.loading .btn-spinner{display:block;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.login-divider{display:flex;align-items:center;gap:14px;margin:24px 0 18px;}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.login-divider span{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
+
+/* ── Demo account ── */
+.demo-card{background:var(--off);border:1.5px dashed var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.demo-card:hover{border-color:var(--blue-lt);background:#eaf1f8;box-shadow:0 4px 14px rgba(46,120,184,.08);}
+.demo-card:active{transform:scale(.985);}
+.demo-top{display:flex;align-items:center;gap:11px;margin-bottom:8px;}
+.demo-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--red) 0%,var(--blue-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:12px;color:#fff;flex-shrink:0;}
+.demo-info strong{display:block;font-size:13px;font-weight:600;color:var(--text);line-height:1.3;}
+.demo-info span{font-size:11px;color:var(--muted);}
+.demo-badge{margin-left:auto;background:var(--blue);color:#fff;font-size:9.5px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.3px;text-transform:uppercase;flex-shrink:0;}
+.demo-creds{display:flex;gap:8px;flex-wrap:wrap;}
+.demo-cred{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:11px;color:var(--text);display:flex;align-items:center;gap:5px;}
+.demo-cred svg{color:var(--muted);flex-shrink:0;}
+.demo-cred span{font-weight:600;font-family:'Sora',sans-serif;letter-spacing:-.2px;}
+.demo-hint{position:absolute;right:14px;bottom:14px;font-size:10px;color:var(--blue);font-weight:500;opacity:0;transition:opacity .2s;display:flex;align-items:center;gap:4px;}
+.demo-card:hover .demo-hint{opacity:1;}
+
+/* ── Error shake ── */
+.shake{animation:shakeX .4s ease;}
+@keyframes shakeX{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+
+.error-msg{background:#fdf0e8;border:1px solid var(--accent-soft);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--red-dk);font-weight:500;margin-bottom:16px;display:none;align-items:center;gap:8px;animation:fadeIn .2s ease;}
+.error-msg.show{display:flex;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── Footer ── */
+.login-footer{text-align:center;padding:0 36px 24px;font-size:11px;color:var(--muted);line-height:1.6;}
+.login-footer a{color:var(--blue);text-decoration:none;font-weight:500;}
+.login-footer a:hover{text-decoration:underline;}
+
+/* ── Bottom text ── */
+.bottom-text{text-align:center;margin-top:18px;font-size:11.5px;color:rgba(255,255,255,.35);animation:cardIn .5s .15s ease both;}
+.bottom-text a{color:rgba(255,255,255,.5);text-decoration:none;}
+.bottom-text a:hover{color:rgba(255,255,255,.7);}
+
+/* ── Responsive ── */
+@media(max-width:480px){
+  .login-wrapper{padding:12px;}
+  .login-header{padding:28px 24px 22px;}
+  .login-body{padding:24px 24px 20px;}
+  .login-footer{padding:0 24px 20px;}
+  .demo-creds{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-card">
+    <!-- Header -->
+    <div class="login-header">
+      <div class="brand-row">
+        <div class="brand-icon">AC</div>
+        <div class="brand-label">
+          <strong>ACTS College</strong>
+          <span>Student Portal</span>
+        </div>
+      </div>
+      <div class="login-subtitle">Sign in to access your academic records,<br>enrollment, and student services.</div>
+    </div>
+
+    <!-- Form -->
+    <div class="login-body">
+      <div class="error-msg" id="errorMsg">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 14v.5"/></svg>
+        <span id="errorText">Invalid student ID or password.</span>
+      </div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="studentId">Student ID</label>
+          <div class="form-input-wrap">
+            <input class="form-input" type="text" id="studentId" placeholder="e.g. 2024-00142" autocomplete="username" required/>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="4"/><path d="M2 18c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="form-input-wrap">
+            <input class="form-input" type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required/>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="9" width="12" height="9" rx="2"/><path d="M7 9V6a3 3 0 016 0v3"/></svg>
+            <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="Toggle password visibility">
+              <svg id="eyeIcon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="checkbox-wrap">
+            <input type="checkbox" id="rememberMe"/>
+            Remember me
+          </label>
+          <a href="#" class="forgot-link" onclick="event.preventDefault();alert('Please contact the registrar office to reset your password.')">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-text">Sign In</span>
+          <div class="btn-spinner"></div>
+        </button>
+      </form>
+
+      <div class="login-divider"><span>Demo Account</span></div>
+
+      <!-- Demo account card -->
+      <div class="demo-card" onclick="fillDemo()" title="Click to autofill demo credentials">
+        <div class="demo-top">
+          <div class="demo-avatar">JS</div>
+          <div class="demo-info">
+            <strong>Juan S. Santos</strong>
+            <span>BSCS 3A · 3rd Year</span>
+          </div>
+          <div class="demo-badge">Demo</div>
+        </div>
+        <div class="demo-creds">
+          <div class="demo-cred">
+            <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="7" r="4"/><path d="M2 18c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            ID: <span>2024-00142</span>
+          </div>
+          <div class="demo-cred">
+            <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="9" width="12" height="9" rx="2"/><path d="M7 9V6a3 3 0 016 0v3"/></svg>
+            Pass: <span>acts2024</span>
+          </div>
+        </div>
+        <div class="demo-hint">Click to autofill →</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="login-footer">
+      By signing in, you agree to ACTS College's<br>
+      <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+
+  <div class="bottom-text">
+    &copy; 2025 ACTS College · <a href="#">Help &amp; Support</a>
+  </div>
+</div>
+
+<script>
+// ═══════════════ DEMO AUTOFILL ═══════════════
+function fillDemo() {
+  const idField = document.getElementById('studentId');
+  const passField = document.getElementById('password');
+
+  // Clear any previous values with a nice effect
+  idField.value = '';
+  passField.value = '';
+
+  // Typing animation for student ID
+  const demoId = '2024-00142';
+  const demoPass = 'acts2024';
+  let i = 0, j = 0;
+
+  function typeId() {
+    if (i < demoId.length) {
+      idField.value += demoId[i++];
+      setTimeout(typeId, 45);
+    } else {
+      // Start typing password after ID is done
+      setTimeout(typePass, 150);
+    }
+  }
+
+  function typePass() {
+    if (j < demoPass.length) {
+      passField.value += demoPass[j++];
+      setTimeout(typePass, 45);
+    } else {
+      // Check remember me
+      document.getElementById('rememberMe').checked = true;
+      // Pulse the sign-in button
+      const btn = document.getElementById('loginBtn');
+      btn.style.boxShadow = '0 0 0 4px rgba(46,120,184,.2)';
+      setTimeout(() => btn.style.boxShadow = '', 800);
+    }
+  }
+
+  // Focus the ID field and start typing
+  idField.focus();
+  setTimeout(typeId, 100);
+
+  // Hide any previous error
+  document.getElementById('errorMsg').classList.remove('show');
+}
+
+// ═══════════════ PASSWORD TOGGLE ═══════════════
+function togglePassword() {
+  const passField = document.getElementById('password');
+  const eyeIcon = document.getElementById('eyeIcon');
+  if (passField.type === 'password') {
+    passField.type = 'text';
+    eyeIcon.innerHTML = '<path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="3"/><line x1="3" y1="3" x2="17" y2="17" stroke-width="2"/>';
+  } else {
+    passField.type = 'password';
+    eyeIcon.innerHTML = '<path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="3"/>';
+  }
+}
+
+// ═══════════════ LOGIN HANDLER ═══════════════
+function handleLogin(e) {
+  e.preventDefault();
+
+  const id = document.getElementById('studentId').value.trim();
+  const pass = document.getElementById('password').value;
+  const btn = document.getElementById('loginBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const errorText = document.getElementById('errorText');
+
+  // Hide previous errors
+  errorMsg.classList.remove('show');
+
+  // Basic validation
+  if (!id || !pass) {
+    errorText.textContent = 'Please enter your Student ID and password.';
+    errorMsg.classList.add('show');
+    document.querySelector('.login-card').classList.add('shake');
+    setTimeout(() => document.querySelector('.login-card').classList.remove('shake'), 400);
+    return;
+  }
+
+  // Show loading state
+  btn.classList.add('loading');
+
+  // Simulate auth check
+  setTimeout(() => {
+    // Check demo credentials
+    if (id === '2024-00142' && pass === 'acts2024') {
+      // Success — store session and redirect
+      sessionStorage.setItem('acts_authenticated', 'true');
+      sessionStorage.setItem('acts_user', JSON.stringify({
+        id: '2024-00142',
+        name: 'Juan S. Santos',
+        initials: 'JS',
+        program: 'BSCS 3A'
+      }));
+      window.location.href = 'index.html';
+    } else {
+      // Failed
+      btn.classList.remove('loading');
+      errorText.textContent = 'Invalid Student ID or password. Please try again.';
+      errorMsg.classList.add('show');
+      document.querySelector('.login-card').classList.add('shake');
+      setTimeout(() => document.querySelector('.login-card').classList.remove('shake'), 400);
+      document.getElementById('password').value = '';
+      document.getElementById('password').focus();
+    }
+  }, 1200);
+}
+
+// ═══════════════ AUTO-REDIRECT IF LOGGED IN ═══════════════
+if (sessionStorage.getItem('acts_authenticated') === 'true') {
+  window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>

@@ -158,6 +158,9 @@ function handleLogout() {
   loader.style.opacity = '1';
   loader.style.visibility = 'visible';
   loader.classList.remove('fade-out');
-  setTimeout(() => showToast('Signed out. Goodbye, Juan!', 'success'), 800);
-  setTimeout(() => loader.classList.add('fade-out'), 1600);
+  setTimeout(() => {
+    sessionStorage.removeItem('acts_authenticated');
+    sessionStorage.removeItem('acts_user');
+    window.location.href = 'login.html';
+  }, 1200);
 }

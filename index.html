@@ -9,6 +9,12 @@
 </style>
 </head>
 <body>
+<script>
+  // Auth gate — redirect to login if not authenticated
+  if (sessionStorage.getItem('acts_authenticated') !== 'true') {
+    window.location.href = 'login.html';
+  }
+</script>
 
 <!-- ═══════════════════════════════ LOADING SCREEN ═══════════════════════════════ -->
 <div id="loading-screen">
