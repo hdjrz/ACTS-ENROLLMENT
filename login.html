@@ -98,8 +98,8 @@ body::after{content:'';position:fixed;top:-50%;right:-30%;width:800px;height:800
 .demo-cred{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:11px;color:var(--text);display:flex;align-items:center;gap:5px;}
 .demo-cred svg{color:var(--muted);flex-shrink:0;}
 .demo-cred span{font-weight:600;font-family:'Sora',sans-serif;letter-spacing:-.2px;}
-.demo-hint{position:absolute;right:14px;bottom:14px;font-size:10px;color:var(--blue);font-weight:500;opacity:0;transition:opacity .2s;display:flex;align-items:center;gap:4px;}
-.demo-card:hover .demo-hint{opacity:1;}
+.demo-hint{font-size:10px;color:var(--blue);font-weight:500;opacity:0;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:4px;margin-top:10px;}
+.demo-wrap:hover .demo-hint{opacity:1;}
 
 /* ── Error shake ── */
 .shake{animation:shakeX .4s ease;}
@@ -189,6 +189,7 @@ body::after{content:'';position:fixed;top:-50%;right:-30%;width:800px;height:800
       <div class="login-divider"><span>Demo Account</span></div>
 
       <!-- Demo account card -->
+      <div class="demo-wrap">
       <div class="demo-card" onclick="fillDemo()" title="Click to autofill demo credentials">
         <div class="demo-top">
           <div class="demo-avatar">JS</div>
@@ -208,7 +209,8 @@ body::after{content:'';position:fixed;top:-50%;right:-30%;width:800px;height:800
             Pass: <span>acts2024</span>
           </div>
         </div>
-        <div class="demo-hint">Click to autofill →</div>
+      </div>
+      <div class="demo-hint">Click to autofill →</div>
       </div>
     </div>
 

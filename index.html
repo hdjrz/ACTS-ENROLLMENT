@@ -18,22 +18,18 @@
 
 <!-- ═══════════════════════════════ LOADING SCREEN ═══════════════════════════════ -->
 <div id="loading-screen">
-  <div class="loader-brand">
-    <div class="loader-icon">AC</div>
-    <div class="loader-brand-text">
-      <strong>ACTS College</strong>
-      <span>STUDENT PORTAL</span>
-    </div>
+  <div class="ld-spin">
+    <img class="ld-img" src="image/logo.png" alt="ACTS College"
+      onerror="this.onerror=null;this.src='';this.parentElement.innerHTML='<div class=\'ld-fallback\'>AC</div>'" />
   </div>
-  <div class="loader-bar-wrap">
-    <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderBar"></div></div>
-    <div class="loader-status" id="loaderStatus">Initializing…</div>
+  <div class="ld-name">
+    ACTS College
+    <small>Student Portal</small>
   </div>
-  <div class="loader-dots">
-    <div class="loader-dot"></div>
-    <div class="loader-dot"></div>
-    <div class="loader-dot"></div>
+  <div class="ld-track">
+    <div class="ld-bar" id="loaderBar"></div>
   </div>
+  <div class="loader-status" id="loaderStatus">Initializing…</div>
 </div>
 
 <!-- ═══════════════════════════════ CONTENT LOADER ═══════════════════════════════ -->

@@ -17,8 +17,10 @@ const status = document.getElementById('loaderStatus');
 function runLoader() {
   if (stepIdx >= loadingSteps.length) {
     setTimeout(() => {
-      document.getElementById('loading-screen').classList.add('fade-out');
-    }, 420);
+      const screen = document.getElementById('loading-screen');
+      screen.classList.add('fade-out');
+      screen.addEventListener('transitionend', () => screen.style.display = 'none', { once: true });
+    }, 500);
     return;
   }
   const step = loadingSteps[stepIdx++];
