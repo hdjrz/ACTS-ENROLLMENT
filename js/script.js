@@ -35,7 +35,9 @@ const pageTitles = {
   announcements:'Announcements', evaluation:'Professor Evaluation',
   enrollment:'Enrollment', sectioning:'Sectioning', subjects:'Subject Assignment',
   tuition:'Tuition Fee', payments:'Payment Monitoring',
-  contact:'Contact Info', profile:'My Profile'
+  contact:'Contact Info', profile:'My Profile',
+  library:'Library System', documents:'Documents', standing:'Academic Standing',
+  scholarship:'Scholarships', settings:'Account Settings'
 };
 
 function showView(id, navEl) {
@@ -109,6 +111,16 @@ function switchContactTab(tabEl, sectionId) {
   document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
   tabEl.classList.add('active');
   ['ctab-personal','ctab-guardian','ctab-address'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = id === sectionId ? '' : 'none';
+  });
+}
+
+// ═══════════════ SETTINGS TABS ═══════════════
+function switchSettingsTab(tabEl, sectionId) {
+  document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+  ['stab-security','stab-privacy','stab-notif','stab-pref'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = id === sectionId ? '' : 'none';
   });

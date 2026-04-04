@@ -103,6 +103,24 @@
       Payment Monitoring
     </div>
 
+    <div class="nav-section-label">Resources</div>
+    <div class="nav-item" onclick="showView('library',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3h2v14H3zM15 3h2v14h-2zM5 5h10v10H5z"/><path d="M8 8h4M8 11h4"/></svg>
+      Library System
+    </div>
+    <div class="nav-item" onclick="showView('documents',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a1 1 0 00-1 1v14a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1z"/><path d="M10 7h4M10 11h3M10 14h2"/></svg>
+      Documents
+    </div>
+    <div class="nav-item" onclick="showView('standing',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="16" height="12" rx="2"/><path d="M4 5V4a1 1 0 011-1h2a1 1 0 011 1v1M13 5V4a1 1 0 011-1h2a1 1 0 011 1v1M7 11h6M7 15h4"/></svg>
+      Academic Standing
+    </div>
+    <div class="nav-item" onclick="showView('scholarship',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8l7-4 7 4v2c0 3-2 5-7 6-5-1-7-3-7-6V8z"/><circle cx="10" cy="12" r="3"/></svg>
+      Scholarships
+    </div>
+
     <div class="nav-section-label">Profile</div>
     <div class="nav-item" onclick="showView('contact',this)">
       <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2z"/><path d="M10 9a2 2 0 100-4 2 2 0 000 4zm-3 5s.5-2 3-2 3 2 3 2"/></svg>
@@ -111,6 +129,10 @@
     <div class="nav-item" onclick="showView('profile',this)">
       <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="7" r="4"/><path d="M2 18c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       My Profile
+    </div>
+    <div class="nav-item" onclick="showView('settings',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="2"/><path d="M10 3v1M10 16v1M4.22 4.22l.7.7M14.78 15.22l.7.7M3 10h1M16 10h1M4.22 15.22l.7-.7M14.78 4.22l.7-.7"/></svg>
+      Account Settings
     </div>
   </nav>
   <div class="sidebar-footer">
@@ -640,6 +662,334 @@
               <button class="btn-outline" style="justify-content:center;" onclick="showView('evaluation',null)">⭐ Evaluate Prof</button>
               <button class="btn-outline" style="justify-content:center;" onclick="showToast('Downloading COR…','success')">📄 Download COR</button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ LIBRARY SYSTEM ══════════════ -->
+    <div class="view" id="view-library">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Library System</h2><p>Manage your library reservations and borrowing history</p></div>
+        <button class="btn-primary" onclick="showToast('Searching library catalog…','success')"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="5"/><path d="M13 13l4 4"/></svg>Search Catalog</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">3</span><span class="stat-label">Books Borrowed</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val">0</span><span class="stat-label">Late Returns</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon red"></div></div><span class="stat-val">7</span><span class="stat-label">Days Left</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Current Checkouts</span><a class="panel-link" onclick="showToast('Renewing books…','success')">Renew All</a></div>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:12px;height:14px;background:var(--blue);border-radius:2px;flex-shrink:0;margin-top:1px;"></div>
+              <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;color:var(--text);">Data Structures: Fundamentals & Applications</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">By Mark Allen Weiss · Shelf: CS-331</div></div>
+              <div style="text-align:right;flex-shrink:0;"><div style="font-size:11px;color:var(--muted);background:var(--off);padding:3px 8px;border-radius:4px;font-weight:500;">Due Apr 8</div></div>
+            </div>
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:12px;height:14px;background:var(--red);border-radius:2px;flex-shrink:0;margin-top:1px;"></div>
+              <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;color:var(--text);">Software Engineering: A Practitioner's Approach</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">By Roger Pressman · Shelf: SE-400</div></div>
+              <div style="text-align:right;flex-shrink:0;"><div style="font-size:11px;color:var(--muted);background:var(--off);padding:3px 8px;border-radius:4px;font-weight:500;">Due Apr 5</div></div>
+            </div>
+            <div style="padding:16px 20px;display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:12px;height:14px;background:#1aac87;border-radius:2px;flex-shrink:0;margin-top:1px;"></div>
+              <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;color:var(--text);">Database Database System Concepts</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">By Silberschatz et al. · Shelf: DB-360</div></div>
+              <div style="text-align:right;flex-shrink:0;"><div style="font-size:11px;color:var(--muted);background:var(--off);padding:3px 8px;border-radius:4px;font-weight:500;">Due Apr 15</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Reserved Books</span><a class="panel-link">View All</a></div>
+          <div style="padding:18px 20px;text-align:center;">
+            <div style="width:48px;height:48px;background:var(--off);border-radius:10px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.5"><path d="M3 3h2v14H3zM15 3h2v14h-2zM5 5h10v10H5z"/><path d="M8 8h4M8 11h4"/></svg></div>
+            <div style="font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:2px;">No Reservations</div>
+            <div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;">You have no books on reserve at this time.</div>
+            <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showToast('Browse library catalog…','success')">Browse Catalog</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">Borrowing History</span><a class="panel-link">Show More</a></div>
+        <table style="margin-bottom:0;">
+          <thead><tr><th>Title</th><th>Author</th><th>Borrowed Date</th><th>Return Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Computer Networks: A Top-Down Approach</td><td>Kurose & Ross</td><td>Mar 10, 2025</td><td>Mar 24, 2025</td><td><span class="tag success">Returned</span></td></tr>
+            <tr><td>Discrete Mathematics and Its Applications</td><td>Kenneth Rosen</td><td>Feb 28, 2025</td><td>Mar 14, 2025</td><td><span class="tag success">Returned</span></td></tr>
+            <tr><td>Introduction to Algorithms</td><td>CLRS</td><td>Feb 15, 2025</td><td>Mar 1, 2025</td><td><span class="tag success">Returned</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ DOCUMENTS ══════════════ -->
+    <div class="view" id="view-documents">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Documents</h2><p>Upload and track submission of required documents</p></div>
+        <button class="btn-primary" onclick="document.getElementById('docUpload').click()"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="5" x2="10" y2="15"/><line x1="5" y1="10" x2="15" y2="10"/></svg>Upload Document</button>
+        <input type="file" id="docUpload" style="display:none;" onchange="showToast('Document uploaded successfully','success')"/>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val" style="color:#1a7a4a;">5</span><span class="stat-label">Approved</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon yellow"></div></div><span class="stat-val" style="color:#7a6a1a;">2</span><span class="stat-label">Pending</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon red"></div></div><span class="stat-val">1</span><span class="stat-label">Revisions Required</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">1</span><span class="stat-label">Not Yet Submitted</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="doc-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:11px;">
+              <div style="width:36px;height:36px;background:#eaf7f0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">✓</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">NSO Birth Certificate</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">Uploaded Mar 5</div></div>
+            </div>
+            <span class="tag success">Approved</span>
+          </div>
+        </div>
+        <div class="doc-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:11px;">
+              <div style="width:36px;height:36px;background:#e8f3fb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">📝</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Medical Clearance Form</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">Uploaded Feb 28</div></div>
+            </div>
+            <span class="tag success">Approved</span>
+          </div>
+        </div>
+        <div class="doc-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:11px;">
+              <div style="width:36px;height:36px;background:#fdf8e8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">⏳</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Community Tax Certificate</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">Awaiting Review</div></div>
+            </div>
+            <span class="tag warn">Pending</span>
+          </div>
+        </div>
+        <div class="doc-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:11px;">
+              <div style="width:36px;height:36px;background:#fdf0e8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">⚠️</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Barangay Clearance</div><div style="font-size:11px;color:#b96538;margin-top:1px;">Revisions needed</div></div>
+            </div>
+            <span class="tag urgent">Revisions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ ACADEMIC STANDING ══════════════ -->
+    <div class="view" id="view-standing">
+      <div class="page-head"><div class="page-head-left"><h2>Academic Standing</h2><p>Your detailed academic performance and progress</p></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">1.85</span><span class="stat-label">Cumulative GWA</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val" style="color:#1a7a4a;">Dean's List</span><span class="stat-label">Current Honors</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon purple"></div></div><span class="stat-val">89</span><span class="stat-label">Cumulative Units</span></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">GPA Trend (Last 4 Semesters)</span></div>
+          <div style="padding:20px;background:var(--off);border-radius:8px;margin:14px;height:180px;display:flex;align-items:flex-end;justify-content:space-around;gap:12px;">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="background:var(--blue-lt);width:100%;height:60px;border-radius:6px;opacity:.6;"></div>
+              <div style="font-size:10px;color:var(--muted);font-weight:500;">1st Sem<br/>2023-24<br/>1.92</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="background:var(--blue-lt);width:100%;height:85px;border-radius:6px;opacity:.7;"></div>
+              <div style="font-size:10px;color:var(--muted);font-weight:500;">2nd Sem<br/>2023-24<br/>1.78</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="background:var(--blue-lt);width:100%;height:72px;border-radius:6px;opacity:.65;"></div>
+              <div style="font-size:10px;color:var(--muted);font-weight:500;">1st Sem<br/>2024-25<br/>1.88</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="background:var(--blue);width:100%;height:90px;border-radius:6px;"></div>
+              <div style="font-size:10px;color:var(--muted);font-weight:500;">2nd Sem<br/>2024-25<br/>1.85</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Academic Requirements</span></div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:24px;height:24px;background:#eaf7f0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1a7a4a;font-weight:700;font-size:12px;">✓</div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:500;color:var(--text);">Minimum GWA</div><div style="font-size:10.5px;color:var(--muted);">Target: ≤ 1.75</div></div>
+              <span style="font-size:12px;font-weight:600;color:#1a7a4a;">1.85 ⚠️</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:24px;height:24px;background:#eaf7f0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1a7a4a;font-weight:700;font-size:12px;">✓</div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:500;color:var(--text);">Minimum Grade</div><div style="font-size:10.5px;color:var(--muted);">No grade below 3.0</div></div>
+              <span style="font-size:12px;font-weight:600;color:#1a7a4a;">Passed</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:24px;height:24px;background:#eaf7f0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1a7a4a;font-weight:700;font-size:12px;">✓</div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:500;color:var(--text);">Enrollment Requirement</div><div style="font-size:10.5px;color:var(--muted);">12 units minimum</div></div>
+              <span style="font-size:12px;font-weight:600;color:#1a7a4a;">21</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">Sem-by-Sem Performance</span></div>
+        <table style="margin-bottom:0;">
+          <thead><tr><th>Semester</th><th>Subjects</th><th>Units</th><th>GWA</th><th>Comments</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600;">1st Sem 2023-24</td><td>7</td><td>21</td><td><span class="grade-pill b">1.92</span></td><td>On Dean's List</td></tr>
+            <tr><td style="font-weight:600;">2nd Sem 2023-24</td><td>7</td><td>21</td><td><span class="grade-pill a">1.78</span></td><td>Cum Laude target</td></tr>
+            <tr><td style="font-weight:600;">1st Sem 2024-25</td><td>7</td><td>21</td><td><span class="grade-pill b">1.88</span></td><td>On Dean's List</td></tr>
+            <tr><td style="font-weight:600;">2nd Sem 2024-25</td><td>7</td><td>21</td><td><span class="grade-pill b">1.85</span><strong style="color:var(--blue-dk);">*</strong></td><td>Pending Finals</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:12px 20px;font-size:10.5px;color:var(--muted);">* Preliminary grade · Subject to changes after final exams</div>
+      </div>
+    </div>
+
+    <!-- ══════════════ SCHOLARSHIPS & FINANCIAL AID ══════════════ -->
+    <div class="view" id="view-scholarship">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Scholarships & Financial Aid</h2><p>Manage scholarship status and apply for financial assistance</p></div>
+        <button class="btn-primary" onclick="showToast('Opening scholarship applications…','success')"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="5" x2="10" y2="15"/><line x1="5" y1="10" x2="15" y2="10"/></svg>Apply for Aid</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val" style="color:#1a7a4a;">₱1,680</span><span class="stat-label">Discount/Semester</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">₱3,360</span><span class="stat-label">Total Aid Received</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon purple"></div></div><span class="stat-val">10%</span><span class="stat-label">Current Coverage</span></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Active Scholarships</span></div>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Academic Merit Scholarship (10%)</div>
+                <div style="font-size:11.5px;color:var(--muted);line-height:1.5;">Full tuition discount based on academic excellence. GWA ≤ 1.85 required for continuation.</div>
+              </div>
+              <span class="tag success" style="white-space:nowrap;flex-shrink:0;">Active</span>
+            </div>
+            <div style="padding:16px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Partial Tuition Assistance</div>
+                <div style="font-size:11.5px;color:var(--muted);line-height:1.5;">Need-based aid program for deserving students. Financial requirements must be met annually.</div>
+              </div>
+              <span class="tag info" style="white-space:nowrap;flex-shrink:0;">Pending</span>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Available Programs</span></div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:var(--white);" onmouseover="this.style.background='var(--off)'" onmouseout="this.style.background='var(--white)'">
+              <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">Excellence Scholarship</div>
+              <div style="font-size:10.5px;color:var(--muted);">Up to 80% tuition · GPA ≤ 1.5 required</div>
+              <button class="btn-outline" style="width:100%;margin-top:8px;justify-content:center;font-size:11px;padding:5px 10px;" onclick="showToast('Opening application…','success')">Apply</button>
+            </div>
+            <div style="padding:12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:var(--white);" onmouseover="this.style.background='var(--off)'" onmouseout="this.style.background='var(--white)'">
+              <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">Student Assistant Program</div>
+              <div style="font-size:10.5px;color:var(--muted);">₱6,000/semester stipend</div>
+              <button class="btn-outline" style="width:100%;margin-top:8px;justify-content:center;font-size:11px;padding:5px 10px;" onclick="showToast('Opening application…','success')">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ ACCOUNT SETTINGS ══════════════ -->
+    <div class="view" id="view-settings">
+      <div class="page-head"><div class="page-head-left"><h2>Account Settings</h2><p>Manage your account security, preferences, and notifications</p></div></div>
+      <div class="settings-tabs">
+        <div class="stab active" onclick="switchSettingsTab(this,'stab-security')">🔒 Security</div>
+        <div class="stab" onclick="switchSettingsTab(this,'stab-privacy')">👁️ Privacy</div>
+        <div class="stab" onclick="switchSettingsTab(this,'stab-notif')">🔔 Notifications</div>
+        <div class="stab" onclick="switchSettingsTab(this,'stab-pref')">⚙️ Preferences</div>
+      </div>
+      <div id="stab-security">
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-head"><span class="panel-title">Password & Login Security</span></div>
+          <div style="padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Password</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Last changed 45 days ago</div></div>
+            <button class="btn-outline" onclick="showToast('Password change initiated…','success')">Change</button>
+          </div>
+          <div style="padding:20px;display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Two-Factor Authentication</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;"><span class="tag warn">Not Enabled</span><span style="margin-left:8px;font-weight:500;color:var(--text);">Add extra security layer</span></div></div>
+            <button class="btn-primary" onclick="showToast('Setting up 2FA…','success')">Enable</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Active Sessions</span></div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;background:#e8f3fb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;">💻</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Chrome on Windows</div><div style="font-size:11px;color:var(--muted);">192.168.1.5 · Last active now</div></div>
+            </div>
+            <span style="font-size:11px;background:#eaf7f0;color:#1a7a4a;padding:3px 9px;border-radius:4px;font-weight:500;">Current</span>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;background:var(--off);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;">📱</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Safari on iPhone</div><div style="font-size:11px;color:var(--muted);">203.122.4.8 · 3 days ago</div></div>
+            </div>
+            <button class="btn-outline" style="padding:5px 12px;font-size:11px;" onclick="showToast('Session logged out','success')">Logout</button>
+          </div>
+        </div>
+      </div>
+      <div id="stab-privacy" style="display:none;">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Privacy Controls</span></div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Profile Visibility</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Who can see your profile information</div></div>
+            <select style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;"><option>Classmates Only</option><option>All Students</option><option>Private</option></select>
+          </div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Directory Listing</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Appear in college directory</div></div>
+            <label style="cursor:pointer;"><input type="checkbox" checked style="margin-right:6px;"/>Visible</label>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Contact Information</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Which students can contact you</div></div>
+            <select style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;"><option>Everyone</option><option>Classmates</option><option>Nobody</option></select>
+          </div>
+        </div>
+      </div>
+      <div id="stab-notif" style="display:none;">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Notification Preferences</span></div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px;">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox" checked/>
+              <div><div style="font-size:12.5px;font-weight:500;color:var(--text);">Grades Posted</div><div style="font-size:10.5px;color:var(--muted);">New grades available</div></div>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox" checked/>
+              <div><div style="font-size:12.5px;font-weight:500;color:var(--text);">Important Announcements</div><div style="font-size:10.5px;color:var(--muted);">Critical updates from college</div></div>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox" checked/>
+              <div><div style="font-size:12.5px;font-weight:500;color:var(--text);">Payment Reminders</div><div style="font-size:10.5px;color:var(--muted);">Tuition and exam payment due dates</div></div>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox"/>
+              <div><div style="font-size:12.5px;font-weight:500;color:var(--text);">Course/Class Updates</div><div style="font-size:10.5px;color:var(--muted);">Changes to your enrolled subjects</div></div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div id="stab-pref" style="display:none;">
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-head"><span class="panel-title">General Preferences</span></div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Theme</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Display appearance</div></div>
+            <select style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;"><option>Light</option><option>Dark</option><option>Auto</option></select>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Language</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Portal language</div></div>
+            <select style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;"><option>English</option><option>Filipino</option><option>Spanish</option></select>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Advanced</span></div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">API Access</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">For third-party integrations</div></div>
+            <button class="btn-outline" onclick="showToast('Opening API documentation…','success')">Manage</button>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Data Export</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Download your portal data</div></div>
+            <button class="btn-outline" onclick="showToast('Preparing data export…','success')">Export</button>
           </div>
         </div>
       </div>
