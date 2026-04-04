@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACTS Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</style>
+</head>
+<body>
+<script>
+  // Auth gate — redirect to login if not authenticated
+  if (sessionStorage.getItem('acts_authenticated') !== 'true') {
+    window.location.href = 'login.html';
+  }
+</script>
+
+<!-- ═══════════════════════════════ LOADING SCREEN ═══════════════════════════════ -->
+<div id="loading-screen">
+  <div class="ld-spin">
+    <img class="ld-img" src="image/logo.png" alt="ACTS College"
+      onerror="this.onerror=null;this.src='';this.parentElement.innerHTML='<div class=\'ld-fallback\'>AC</div>'" />
+  </div>
+  <div class="ld-name">
+    ACTS College
+    <small>Student Portal</small>
+  </div>
+  <div class="ld-track">
+    <div class="ld-bar" id="loaderBar"></div>
+  </div>
+  <div class="loader-status" id="loaderStatus">Initializing…</div>
+</div>
+
+<!-- ═══════════════════════════════ CONTENT LOADER ═══════════════════════════════ -->
+<div class="content-loader" id="contentLoader">
+  <div class="cl-spinner"></div>
+  <span class="cl-text">Loading module…</span>
+</div>
+
+<!-- ═══════════════════════════════ TOAST ═══════════════════════════════ -->
+<div id="toast"><span class="toast-icon">✓</span><span id="toastMsg"></span></div>
+
+<!-- ═══════════════════════════════ OVERLAY ═══════════════════════════════ -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-badge">
+      <div class="brand-icon">AC</div>
+      <div class="brand-text"><strong>ACTS College</strong><span>STUDENT PORTAL</span></div>
+    </div>
+  </div>
+  <div class="sidebar-student">
+    <div class="student-avatar">JS</div>
+    <div class="student-info"><strong>Juan S. Santos</strong><span>2024-00142 · BSCS 3A</span></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Overview</div>
+    <div class="nav-item active" onclick="showView('dashboard',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+      Dashboard
+    </div>
+
+    <div class="nav-section-label">Academic</div>
+    <div class="nav-item" onclick="showView('grades',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2h8l3 3v13H3V3a1 1 0 011-1z"/><path d="M6 9h8M6 13h5"/></svg>
+      Grade Viewing
+    </div>
+    <div class="nav-item" onclick="showView('schedule',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="4" width="16" height="14" rx="2"/><path d="M6 2v4M14 2v4M2 9h16"/></svg>
+      Class Schedule
+    </div>
+    <div class="nav-item" onclick="showView('announcements',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h12a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M3 4l7 6 7-6"/></svg>
+      Announcements<span class="nav-badge">3</span>
+    </div>
+    <div class="nav-item" onclick="showView('evaluation',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 14.2l-4.8 2.7.9-5.4L2.2 7.7l5.4-.8z"/></svg>
+      Professor Evaluation
+    </div>
+
+    <div class="nav-section-label">Registration</div>
+    <div class="nav-item" onclick="showView('enrollment',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a1 1 0 00-1 1v14a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1z"/><path d="M8 7h4M8 11h4M8 15h2"/></svg>
+      Enrollment
+    </div>
+    <div class="nav-item" onclick="showView('sectioning',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4"/><circle cx="13" cy="13" r="4"/></svg>
+      Sectioning
+    </div>
+    <div class="nav-item" onclick="showView('subjects',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg>
+      Subject Assignment
+    </div>
+
+    <div class="nav-section-label">Finance</div>
+    <div class="nav-item" onclick="showView('tuition',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="8"/><path d="M10 6v8M7 8.5c0-1.4 1.3-2.5 3-2.5s3 1.1 3 2.5S11.7 11 10 11s-3 1.1-3 2.5S8.3 16 10 16s3-1.1 3-2.5"/></svg>
+      Tuition Fee
+    </div>
+    <div class="nav-item" onclick="showView('payments',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="16" height="12" rx="2"/><path d="M2 9h16M6 13h2"/></svg>
+      Payment Monitoring
+    </div>
+
+    <div class="nav-section-label">Resources</div>
+    <div class="nav-item" onclick="showView('library',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3h2v14H3zM15 3h2v14h-2zM5 5h10v10H5z"/><path d="M8 8h4M8 11h4"/></svg>
+      Library System
+    </div>
+    <div class="nav-item" onclick="showView('documents',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a1 1 0 00-1 1v14a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1z"/><path d="M10 7h4M10 11h3M10 14h2"/></svg>
+      Documents
+    </div>
+    <div class="nav-item" onclick="showView('standing',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="16" height="12" rx="2"/><path d="M4 5V4a1 1 0 011-1h2a1 1 0 011 1v1M13 5V4a1 1 0 011-1h2a1 1 0 011 1v1M7 11h6M7 15h4"/></svg>
+      Academic Standing
+    </div>
+    <div class="nav-item" onclick="showView('scholarship',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8l7-4 7 4v2c0 3-2 5-7 6-5-1-7-3-7-6V8z"/><circle cx="10" cy="12" r="3"/></svg>
+      Scholarships
+    </div>
+
+    <div class="nav-section-label">Profile</div>
+    <div class="nav-item" onclick="showView('contact',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2z"/><path d="M10 9a2 2 0 100-4 2 2 0 000 4zm-3 5s.5-2 3-2 3 2 3 2"/></svg>
+      Contact Info
+    </div>
+    <div class="nav-item" onclick="showView('profile',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="7" r="4"/><path d="M2 18c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      My Profile
+    </div>
+    <div class="nav-item" onclick="showView('settings',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="2"/><path d="M10 3v1M10 16v1M4.22 4.22l.7.7M14.78 15.22l.7.7M3 10h1M16 10h1M4.22 15.22l.7-.7M14.78 4.22l.7-.7"/></svg>
+      Account Settings
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="handleLogout()">
+      <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3M13 15l4-5-4-5M17 10H7"/></svg>
+      Sign Out
+    </button>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
+<main class="main">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="hamburger" onclick="toggleSidebar()">
+        <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="#62778b" stroke-width="1.8"><path d="M2 5h16M2 10h16M2 15h16"/></svg>
+      </button>
+      <span class="page-title" id="pageTitle">Dashboard</span>
+      <span class="semester-pill">S.Y. 2024–2025 · 2nd Sem</span>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-icon-btn" onclick="showToast('No new notifications','success')">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#62778b" stroke-width="1.6"><path d="M10 2a6 6 0 016 6c0 3.5 1.5 5 1.5 5H2.5S4 11.5 4 8a6 6 0 016-6zM8.5 17a1.5 1.5 0 003 0"/></svg>
+        <span class="notif-dot"></span>
+      </div>
+      <div class="topbar-icon-btn">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#62778b" stroke-width="1.6"><circle cx="8" cy="8" r="5"/><path d="M13 13l4 4"/></svg>
+      </div>
+      <div class="topbar-avatar" onclick="showView('profile',null)">JS</div>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ══════════════ DASHBOARD ══════════════ -->
+    <div class="view active" id="view-dashboard">
+      <div class="welcome-banner">
+        <div class="welcome-text">
+          <h2>Good morning, Juan! 👋</h2>
+          <p>You have 4 classes today · Midterm exams start in 12 days</p>
+        </div>
+        <div style="display:flex;gap:12px;z-index:1;">
+          <div class="welcome-badge"><span class="big-num">1.85</span><div class="big-label">Current GWA</div></div>
+          <div class="welcome-badge"><span class="big-num">94%</span><div class="big-label">Attendance</div></div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"><svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#2e78b8" stroke-width="1.7"><path d="M6 2h8l3 3v13H3V3a1 1 0 011-1z"/><path d="M6 9h8M6 13h5"/></svg></div><span class="stat-change up">Dean's List</span></div><span class="stat-val">1.85</span><span class="stat-label">General Weighted Average</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon red"><svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#d97a45" stroke-width="1.7"><rect x="2" y="4" width="16" height="14" rx="2"/><path d="M6 2v4M14 2v4M2 9h16"/></svg></div><span class="stat-change neutral">7 subjects</span></div><span class="stat-val">21</span><span class="stat-label">Enrolled Units</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"><svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="1.7"><rect x="2" y="5" width="16" height="12" rx="2"/><path d="M2 9h16M6 13h2"/></svg></div><span class="stat-change warn">₱9,185 due</span></div><span class="stat-val">₱18,370</span><span class="stat-label">Total Tuition Fee</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon purple"><svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#7c5cbf" stroke-width="1.7"><path d="M10 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 14.2l-4.8 2.7.9-5.4L2.2 7.7l5.4-.8z"/></svg></div><span class="stat-change warn">4 pending</span></div><span class="stat-val">3 / 7</span><span class="stat-label">Evaluations Submitted</span></div>
+      </div>
+      <div class="three-two">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Today's Classes</span><a class="panel-link" onclick="showView('schedule',null)">Full schedule →</a></div>
+          <div class="schedule-item"><span class="sched-time">7:30 – 9:00</span><span class="sched-dot" style="background:#2e78b8"></span><div class="sched-subject"><strong>Data Structures &amp; Algorithms</strong><span>Mr. Dela Cruz · Rm 203</span></div></div>
+          <div class="schedule-item"><span class="sched-time">9:00 – 10:30</span><span class="sched-dot" style="background:#d97a45"></span><div class="sched-subject"><strong>Software Engineering</strong><span>Ms. Reyes · Rm 105</span></div></div>
+          <div class="schedule-item"><span class="sched-time">1:00 – 3:00</span><span class="sched-dot" style="background:#1aac87"></span><div class="sched-subject"><strong>Database Management Systems</strong><span>Mr. Santos · Lab 301</span></div></div>
+          <div class="schedule-item"><span class="sched-time">3:00 – 4:30</span><span class="sched-dot" style="background:#7c5cbf"></span><div class="sched-subject"><strong>Ethics in Technology</strong><span>Ms. Cruz · Rm 412</span></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Announcements</span><a class="panel-link" onclick="showView('announcements',null)">See all →</a></div>
+          <div class="annc-item"><div class="annc-head"><span class="tag urgent">Urgent</span><span class="annc-date">Today</span></div><div class="annc-title">Midterm Exam Schedule Released</div><div class="annc-body">Exams run April 7–12. Bring your ID &amp; exam permit.</div></div>
+          <div class="annc-item"><div class="annc-head"><span class="tag info">Academic</span><span class="annc-date">Mar 29</span></div><div class="annc-title">DSA Lab #4 Deadline Extended</div><div class="annc-body">New deadline: April 5, 11:59 PM via student portal.</div></div>
+          <div class="annc-item"><div class="annc-head"><span class="tag general">General</span><span class="annc-date">Mar 27</span></div><div class="annc-title">Library Hours Extended</div><div class="annc-body">Open until 9PM, April 1–15 during exam season.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ GRADE VIEWING ══════════════ -->
+    <div class="view" id="view-grades">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Grade Viewing</h2><p>2nd Semester · S.Y. 2024–2025</p></div>
+        <button class="btn-primary" onclick="showToast('Transcript download started','success')"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h14M10 3v10M5 9l5 5 5-5"/></svg>Download Transcript</button>
+      </div>
+      <div class="gpa-highlight">
+        <div>
+          <div style="font-size:11px;color:var(--muted);font-weight:500;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">Current GWA</div>
+          <div class="gpa-num">1.85</div>
+          <div style="font-size:12px;color:#1a7a4a;margin-top:4px;font-weight:500;">⭐ Dean's List Qualifier</div>
+        </div>
+        <div class="gpa-meta">
+          <strong>3rd Year · 2nd Semester</strong>
+          <span>21 units enrolled</span>
+          <div style="margin-top:9px;font-size:11.5px;color:var(--muted);">Cum Laude target: <strong style="color:var(--text);">1.75</strong></div>
+        </div>
+        <div class="gpa-bar-wrap">
+          <div class="gpa-bar-label"><span>Progress to Latin Honors</span><span>0.10 pts away</span></div>
+          <div class="gpa-bar-track"><div class="gpa-bar-fill"></div></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:5px;">Maintain GWA ≤ 1.75 to qualify for Cum Laude</div>
+        </div>
+      </div>
+      <div class="grades-table-wrap">
+        <table>
+          <thead><tr><th>Code</th><th>Subject</th><th>Units</th><th>Prelim</th><th>Midterm</th><th>Finals</th><th>Final Grade</th><th>Equivalent</th><th>Remarks</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS311</td><td>Data Structures &amp; Algorithms</td><td>4</td><td>92</td><td>—</td><td>—</td><td><span class="grade-pill b">1.50</span></td><td style="font-size:12px;color:var(--muted);">Excellent</td><td style="color:#1a7a4a;font-size:12px;font-weight:500;">Passed</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS321</td><td>Software Engineering</td><td>3</td><td>88</td><td>—</td><td>—</td><td><span class="grade-pill b">1.75</span></td><td style="font-size:12px;color:var(--muted);">Very Good</td><td style="color:#1a7a4a;font-size:12px;font-weight:500;">Passed</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS332</td><td>Database Management Systems</td><td>4</td><td>91</td><td>—</td><td>—</td><td><span class="grade-pill b">1.50</span></td><td style="font-size:12px;color:var(--muted);">Excellent</td><td style="color:#1a7a4a;font-size:12px;font-weight:500;">Passed</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS341</td><td>Computer Networks</td><td>3</td><td>85</td><td>—</td><td>—</td><td><span class="grade-pill b">2.00</span></td><td style="font-size:12px;color:var(--muted);">Good</td><td style="color:#1a7a4a;font-size:12px;font-weight:500;">Passed</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">HUM201</td><td>Ethics in Technology</td><td>3</td><td>90</td><td>—</td><td>—</td><td><span class="grade-pill b">1.75</span></td><td style="font-size:12px;color:var(--muted);">Very Good</td><td style="color:#1a7a4a;font-size:12px;font-weight:500;">Passed</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">PE301</td><td>Physical Education 3</td><td>2</td><td>95</td><td>—</td><td>—</td><td><span class="grade-pill a">1.25</span></td><td style="font-size:12px;color:var(--muted);">Outstanding</td><td style="color:#1a7a4a;font-size:12px;font-weight:500;">Passed</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">NSTP201</td><td>NSTP – CWTS 2</td><td>3</td><td>—</td><td>—</td><td>—</td><td><span class="grade-pill ip">INC</span></td><td style="font-size:12px;color:var(--muted);">—</td><td style="color:var(--muted);font-size:12px;">In Progress</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ SCHEDULE ══════════════ -->
+    <div class="view" id="view-schedule">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Class Schedule</h2><p>2nd Semester · Block 3A · A.Y. 2024–2025</p></div>
+        <button class="btn-outline" onclick="showToast('Schedule exported as PDF','success')"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h14M10 3v10M5 9l5 5 5-5"/></svg>Export PDF</button>
+      </div>
+      <div class="panel" style="overflow-x:auto;margin-bottom:16px;">
+        <div class="schedule-week" style="min-width:640px;">
+          <div class="week-header"></div>
+          <div class="week-header">MON</div><div class="week-header today-col">TUE · Today</div><div class="week-header">WED</div><div class="week-header">THU</div><div class="week-header">FRI</div>
+          <div class="time-cell">7:30</div><div class="day-cell"><div class="class-block blue">DSA Lec<br>Rm 203</div></div><div class="day-cell today-col"><div class="class-block blue">DSA Lec<br>Rm 203</div></div><div class="day-cell"></div><div class="day-cell"><div class="class-block blue">DSA Lab<br>Lab 301</div></div><div class="day-cell"></div>
+          <div class="time-cell">9:00</div><div class="day-cell"><div class="class-block red">Soft Eng<br>Rm 105</div></div><div class="day-cell today-col"><div class="class-block red">Soft Eng<br>Rm 105</div></div><div class="day-cell"><div class="class-block red">Soft Eng<br>Rm 105</div></div><div class="day-cell"></div><div class="day-cell"><div class="class-block red">Soft Eng<br>Rm 105</div></div>
+          <div class="time-cell">10:30</div><div class="day-cell"></div><div class="day-cell today-col"></div><div class="day-cell"><div class="class-block blue">Net Lec<br>Rm 208</div></div><div class="day-cell"></div><div class="day-cell"><div class="class-block teal">DB Lec<br>Rm 310</div></div>
+          <div class="time-cell">1:00</div><div class="day-cell"><div class="class-block teal">DB Lab<br>Lab 301</div></div><div class="day-cell today-col"><div class="class-block teal">DB Lab<br>Lab 301</div></div><div class="day-cell"></div><div class="day-cell"><div class="class-block teal">DB Lab<br>Lab 301</div></div><div class="day-cell"></div>
+          <div class="time-cell">3:00</div><div class="day-cell"></div><div class="day-cell today-col"><div class="class-block purple">Ethics<br>Rm 412</div></div><div class="day-cell"><div class="class-block purple">Ethics<br>Rm 412</div></div><div class="day-cell"></div><div class="day-cell"><div class="class-block purple">Ethics<br>Rm 412</div></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);"><span style="width:11px;height:11px;background:#d6ecf7;border-left:3px solid var(--blue);border-radius:2px;display:inline-block;"></span>Data Structures / Networks</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);"><span style="width:11px;height:11px;background:#fdf0e8;border-left:3px solid var(--red);border-radius:2px;display:inline-block;"></span>Software Engineering</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);"><span style="width:11px;height:11px;background:#e0f5f0;border-left:3px solid #1aac87;border-radius:2px;display:inline-block;"></span>Database Management</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);"><span style="width:11px;height:11px;background:#f0ecfb;border-left:3px solid #7c5cbf;border-radius:2px;display:inline-block;"></span>Ethics in Technology</div>
+      </div>
+    </div>
+
+    <!-- ══════════════ ANNOUNCEMENTS ══════════════ -->
+    <div class="view" id="view-announcements">
+      <div class="page-head"><div class="page-head-left"><h2>Announcements</h2><p>3 unread notifications</p></div></div>
+      <div class="panel">
+        <div class="annc-item" style="padding:18px 22px;"><div class="annc-head"><span class="tag urgent">Urgent</span><span class="annc-date">Today, 8:00 AM</span></div><div class="annc-title" style="font-size:14px;margin-bottom:4px;">Midterm Exam Schedule Released</div><div class="annc-body" style="font-size:12.5px;">The 2nd Semester Midterm Examination schedule has been released. Exams run April 7–12, 2025. Bring your validated school ID and exam permit on examination day.</div></div>
+        <div class="annc-item" style="padding:18px 22px;"><div class="annc-head"><span class="tag info">Academic</span><span class="annc-date">Mar 29, 2:00 PM</span></div><div class="annc-title" style="font-size:14px;margin-bottom:4px;">DSA Lab Activity #4 Deadline Extended</div><div class="annc-body" style="font-size:12.5px;">CS311 Lab Activity #4 deadline moved to April 5, 2025, 11:59 PM. Submit your output files through the student portal submission system.</div></div>
+        <div class="annc-item" style="padding:18px 22px;"><div class="annc-head"><span class="tag info">Academic</span><span class="annc-date">Mar 28, 10:00 AM</span></div><div class="annc-title" style="font-size:14px;margin-bottom:4px;">No Classes – Holy Week Observance</div><div class="annc-body" style="font-size:12.5px;">No classes April 14–18, 2025. Classes resume April 21, Monday. Make-up classes to be scheduled by respective faculty members.</div></div>
+        <div class="annc-item" style="padding:18px 22px;"><div class="annc-head"><span class="tag general">General</span><span class="annc-date">Mar 27, 3:00 PM</span></div><div class="annc-title" style="font-size:14px;margin-bottom:4px;">Library Hours Extended During Exam Season</div><div class="annc-body" style="font-size:12.5px;">ACTS College Library will extend hours to 9:00 PM, April 1–15, 2025. Utilize available study rooms and academic resources during this period.</div></div>
+        <div class="annc-item" style="padding:18px 22px;"><div class="annc-head"><span class="tag general">General</span><span class="annc-date">Mar 25, 9:00 AM</span></div><div class="annc-title" style="font-size:14px;margin-bottom:4px;">Student Leadership Summit – Open Registration</div><div class="annc-body" style="font-size:12.5px;">Register for the Annual Student Leadership Summit on April 20, 2025. Limited slots available. Contact the OSA office or complete the online registration form.</div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ PROFESSOR EVALUATION ══════════════ -->
+    <div class="view" id="view-evaluation">
+      <div class="page-head"><div class="page-head-left"><h2>Professor Evaluation</h2><p>2nd Semester · S.Y. 2024–2025 · Deadline: April 15, 2025</p></div></div>
+      <div class="eval-intro">
+        <div class="eval-intro-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 2"/></svg></div>
+        <div><strong>Evaluation Period is Open</strong><p>All responses are strictly confidential and used solely to improve instruction quality. Evaluate all professors honestly before the deadline. Results are released only after final grades are submitted.</p></div>
+      </div>
+      <!-- Submitted evaluation -->
+      <div class="eval-card">
+        <div class="eval-prof-head">
+          <div class="eval-prof-avatar">DC</div>
+          <div class="eval-prof-info"><strong>Mr. Romulo Dela Cruz</strong><span>CS311 – Data Structures &amp; Algorithms</span></div>
+          <div class="eval-done-badge">✓ Submitted</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--off);border-radius:10px;padding:12px 16px;flex-wrap:wrap;gap:8px;">
+          <span style="font-size:13px;color:var(--muted);">Overall Rating</span>
+          <div style="display:flex;gap:3px;"><span style="color:#f5a623;font-size:20px;">★</span><span style="color:#f5a623;font-size:20px;">★</span><span style="color:#f5a623;font-size:20px;">★</span><span style="color:#f5a623;font-size:20px;">★</span><span style="color:var(--border);font-size:20px;">★</span></div>
+          <span style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--text);">4.0 / 5.0</span>
+          <span style="font-size:12px;color:var(--muted);">Submitted Mar 20</span>
+        </div>
+      </div>
+      <!-- Pending 1 -->
+      <div class="eval-card" id="evalCard2">
+        <div class="eval-prof-head">
+          <div class="eval-prof-avatar" style="background:#b96538;">MR</div>
+          <div class="eval-prof-info"><strong>Ms. Lourdes Reyes</strong><span>CS321 – Software Engineering</span></div>
+          <div class="eval-pending-badge">Pending</div>
+        </div>
+        <div class="eval-criteria">
+          <div class="eval-criterion"><label>Teaching Effectiveness</label><div class="star-row" data-g="a"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Subject Mastery</label><div class="star-row" data-g="b"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Classroom Management</label><div class="star-row" data-g="c"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Availability &amp; Approachability</label><div class="star-row" data-g="d"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+        </div>
+        <div class="eval-comment"><label>Comments &amp; Suggestions (Optional)</label><textarea placeholder="Share your thoughts about this professor's teaching style, strengths, or areas for improvement…"></textarea></div>
+        <div class="eval-submit-row">
+          <button class="btn-outline" onclick="showToast('Draft saved','success')">Save Draft</button>
+          <button class="btn-primary" onclick="submitEval('evalCard2')">Submit Evaluation</button>
+        </div>
+      </div>
+      <!-- Pending 2 -->
+      <div class="eval-card" id="evalCard3">
+        <div class="eval-prof-head">
+          <div class="eval-prof-avatar" style="background:#1aac87;">CS</div>
+          <div class="eval-prof-info"><strong>Mr. Carlos Santos</strong><span>CS332 – Database Management Systems</span></div>
+          <div class="eval-pending-badge">Pending</div>
+        </div>
+        <div class="eval-criteria">
+          <div class="eval-criterion"><label>Teaching Effectiveness</label><div class="star-row" data-g="e"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Subject Mastery</label><div class="star-row" data-g="f"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Classroom Management</label><div class="star-row" data-g="g"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Fairness in Grading</label><div class="star-row" data-g="h"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+        </div>
+        <div class="eval-comment"><label>Comments &amp; Suggestions (Optional)</label><textarea placeholder="Share your thoughts…"></textarea></div>
+        <div class="eval-submit-row">
+          <button class="btn-outline" onclick="showToast('Draft saved','success')">Save Draft</button>
+          <button class="btn-primary" onclick="submitEval('evalCard3')">Submit Evaluation</button>
+        </div>
+      </div>
+      <!-- Pending 3 -->
+      <div class="eval-card" id="evalCard4">
+        <div class="eval-prof-head">
+          <div class="eval-prof-avatar" style="background:#235c90;">AL</div>
+          <div class="eval-prof-info"><strong>Ms. Patricia Lim</strong><span>CS341 – Computer Networks</span></div>
+          <div class="eval-pending-badge">Pending</div>
+        </div>
+        <div class="eval-criteria">
+          <div class="eval-criterion"><label>Teaching Effectiveness</label><div class="star-row" data-g="i"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Subject Mastery</label><div class="star-row" data-g="j"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Communication Skills</label><div class="star-row" data-g="k"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+          <div class="eval-criterion"><label>Student Support</label><div class="star-row" data-g="l"><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span><span class="star" onclick="rateStar(this)">★</span></div></div>
+        </div>
+        <div class="eval-comment"><label>Comments &amp; Suggestions (Optional)</label><textarea placeholder="Share your thoughts…"></textarea></div>
+        <div class="eval-submit-row">
+          <button class="btn-outline" onclick="showToast('Draft saved','success')">Save Draft</button>
+          <button class="btn-primary" onclick="submitEval('evalCard4')">Submit Evaluation</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ ENROLLMENT ══════════════ -->
+    <div class="view" id="view-enrollment">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Enrollment</h2><p>2nd Semester · S.Y. 2024–2025</p></div>
+        <span class="tag success" style="padding:6px 14px;font-size:12px;border-radius:8px;">Officially Enrolled</span>
+      </div>
+      <div class="enroll-steps">
+        <div class="estep"><div class="estep-circle done">✓</div><div class="estep-text"><strong>Pre-enrollment</strong><span>Completed Mar 5</span></div></div>
+        <div class="estep-line done"></div>
+        <div class="estep"><div class="estep-circle done">✓</div><div class="estep-text"><strong>Assessment</strong><span>Completed Mar 7</span></div></div>
+        <div class="estep-line done"></div>
+        <div class="estep"><div class="estep-circle done">✓</div><div class="estep-text"><strong>Payment</strong><span>50% paid</span></div></div>
+        <div class="estep-line done"></div>
+        <div class="estep"><div class="estep-circle active">4</div><div class="estep-text"><strong>Validation</strong><span>In progress</span></div></div>
+        <div class="estep-line"></div>
+        <div class="estep"><div class="estep-circle pending">5</div><div class="estep-text"><strong>Fully Enrolled</strong><span>Awaiting</span></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">7</span><span class="stat-label">Subjects Enrolled</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon red"></div></div><span class="stat-val">21</span><span class="stat-label">Total Units</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val" style="color:#1a7a4a;">Active</span><span class="stat-label">Enrollment Status</span></div>
+      </div>
+      <div class="grades-table-wrap">
+        <table>
+          <thead><tr><th>Code</th><th>Subject Title</th><th>Units</th><th>Type</th><th>Section</th><th>Schedule</th><th>Room</th><th>Faculty</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS311</td><td>Data Structures &amp; Algorithms</td><td>4</td><td><span class="tag info">Lec+Lab</span></td><td>3A</td><td>MWF 7:30–9:00</td><td>Rm 203 / Lab 301</td><td>Mr. Dela Cruz</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS321</td><td>Software Engineering</td><td>3</td><td><span class="tag info">Lec</span></td><td>3A</td><td>MTWF 9:00–10:30</td><td>Rm 105</td><td>Ms. Reyes</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS332</td><td>Database Management Systems</td><td>4</td><td><span class="tag info">Lec+Lab</span></td><td>3A</td><td>MTH 1:00–3:00</td><td>Lab 301</td><td>Mr. Santos</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS341</td><td>Computer Networks</td><td>3</td><td><span class="tag info">Lec</span></td><td>3A</td><td>WF 10:30–12:00</td><td>Rm 208</td><td>Ms. Lim</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">HUM201</td><td>Ethics in Technology</td><td>3</td><td><span class="tag general">GE</span></td><td>3A</td><td>TWF 3:00–4:30</td><td>Rm 412</td><td>Ms. Cruz</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">PE301</td><td>Physical Education 3</td><td>2</td><td><span class="tag general">GE</span></td><td>3A</td><td>M 4:30–6:00</td><td>Gym</td><td>Mr. Garcia</td></tr>
+            <tr><td style="font-weight:600;font-size:11.5px;color:var(--muted);">NSTP201</td><td>NSTP – CWTS 2</td><td>3</td><td><span class="tag general">NSTP</span></td><td>3A</td><td>SAT 7:00–10:00</td><td>Hall B</td><td>NSTP Office</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ SECTIONING ══════════════ -->
+    <div class="view" id="view-sectioning">
+      <div class="page-head"><div class="page-head-left"><h2>Sectioning</h2><p>Your assigned section for 2nd Semester · S.Y. 2024–2025</p></div></div>
+      <div class="two-col">
+        <div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px;">
+            <div class="section-badge">
+              <div style="font-family:'Sora',sans-serif;font-size:40px;font-weight:700;color:#fff;line-height:1;">3A</div>
+              <div><strong style="display:block;font-size:14px;color:#fff;margin-bottom:2px;">Block 3A — BSCS</strong><span style="font-size:12px;color:var(--blue-lt);">3rd Year · 2nd Semester</span></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Program</div><div style="font-size:13px;font-weight:600;color:var(--text);">BS Computer Science</div></div>
+              <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Year Level</div><div style="font-size:13px;font-weight:600;color:var(--text);">3rd Year</div></div>
+              <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Adviser</div><div style="font-size:13px;font-weight:600;color:var(--text);">Prof. M. Villanueva</div></div>
+              <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Class Size</div><div style="font-size:13px;font-weight:600;color:var(--text);">38 Students</div></div>
+            </div>
+            <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:14px 16px;">
+              <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;">Section Officers</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--blue-dk);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;">AM</div><div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Anna Marie Flores</div><div style="font-size:11px;color:var(--muted);">President</div></div></div>
+                <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--red-dk);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;">BT</div><div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Bryan Tan</div><div style="font-size:11px;color:var(--muted);">Secretary</div></div></div>
+                <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:#1aac87;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;">CL</div><div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Clara Lim</div><div style="font-size:11px;color:var(--muted);">Treasurer</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Classmates (38)</span><a class="panel-link">View All</a></div>
+          <div style="padding:14px 16px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px;">
+              <div class="classmate-card"><div class="classmate-avatar" style="background:#2e78b8;">AM</div><div><div class="classmate-name">Flores, A.M.</div><div class="classmate-num">2024-00101</div></div></div>
+              <div class="classmate-card"><div class="classmate-avatar" style="background:#d97a45;">BT</div><div><div class="classmate-name">Tan, B.</div><div class="classmate-num">2024-00115</div></div></div>
+              <div class="classmate-card"><div class="classmate-avatar" style="background:#1aac87;">CL</div><div><div class="classmate-name">Lim, C.</div><div class="classmate-num">2024-00120</div></div></div>
+              <div class="classmate-card"><div class="classmate-avatar" style="background:#7c5cbf;">DR</div><div><div class="classmate-name">Reyes, D.</div><div class="classmate-num">2024-00133</div></div></div>
+              <div class="classmate-card" style="border-color:var(--blue-lt);background:#e8f3fb;"><div class="classmate-avatar" style="background:#235c90;">JS</div><div><div class="classmate-name" style="color:var(--blue-dk);">Santos, J. (You)</div><div class="classmate-num">2024-00142</div></div></div>
+              <div class="classmate-card"><div class="classmate-avatar" style="background:#b96538;">MC</div><div><div class="classmate-name">Cruz, M.</div><div class="classmate-num">2024-00156</div></div></div>
+              <div class="classmate-card"><div class="classmate-avatar" style="background:#0a6651;">PG</div><div><div class="classmate-name">Garcia, P.</div><div class="classmate-num">2024-00162</div></div></div>
+              <div class="classmate-card"><div class="classmate-avatar" style="background:#4a2e8c;">RV</div><div><div class="classmate-name">Villanueva, R.</div><div class="classmate-num">2024-00178</div></div></div>
+            </div>
+            <div style="text-align:center;padding-top:12px;font-size:12px;color:var(--muted);">+ 30 more classmates not shown</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ SUBJECT ASSIGNMENT ══════════════ -->
+    <div class="view" id="view-subjects">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Subject Assignment</h2><p>Assigned subjects for Block 3A · 2nd Semester 2024–2025</p></div>
+        <button class="btn-outline" onclick="showToast('COR downloaded successfully','success')"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h14M10 3v10M5 9l5 5 5-5"/></svg>Download COR</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div><span class="stat-change neutral">21 units</span></div><span class="stat-val">7</span><span class="stat-label">Assigned Subjects</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div><span class="stat-change up">All clear</span></div><span class="stat-val">0</span><span class="stat-label">Pending Requirements</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon red"></div><span class="stat-change neutral">Total Earned</span></div><span class="stat-val">89</span><span class="stat-label">Cumulative Units</span></div>
+      </div>
+      <div class="subject-assign-grid">
+        <div class="subj-card"><div class="subj-icon" style="background:#e8f3fb;">💻</div><div class="subj-info"><div class="subj-code">CS311 · 4 Units · Lec + Lab</div><strong>Data Structures &amp; Algorithms</strong><div class="subj-meta">Mr. Dela Cruz<br>MWF 7:30–9:00 · Rm 203 / Lab 301</div></div><span class="tag success" style="margin-left:auto;flex-shrink:0;">Enrolled</span></div>
+        <div class="subj-card"><div class="subj-icon" style="background:#fdf0e8;">⚙️</div><div class="subj-info"><div class="subj-code">CS321 · 3 Units · Lecture</div><strong>Software Engineering</strong><div class="subj-meta">Ms. Reyes<br>MTWF 9:00–10:30 · Rm 105</div></div><span class="tag success" style="margin-left:auto;flex-shrink:0;">Enrolled</span></div>
+        <div class="subj-card"><div class="subj-icon" style="background:#e0f5f0;">🗄️</div><div class="subj-info"><div class="subj-code">CS332 · 4 Units · Lec + Lab</div><strong>Database Management Systems</strong><div class="subj-meta">Mr. Santos<br>MTH 1:00–3:00 · Lab 301</div></div><span class="tag success" style="margin-left:auto;flex-shrink:0;">Enrolled</span></div>
+        <div class="subj-card"><div class="subj-icon" style="background:#e8f3fb;">🌐</div><div class="subj-info"><div class="subj-code">CS341 · 3 Units · Lecture</div><strong>Computer Networks</strong><div class="subj-meta">Ms. Lim<br>WF 10:30–12:00 · Rm 208</div></div><span class="tag success" style="margin-left:auto;flex-shrink:0;">Enrolled</span></div>
+        <div class="subj-card"><div class="subj-icon" style="background:#f0ecfb;">📖</div><div class="subj-info"><div class="subj-code">HUM201 · 3 Units · GE Lecture</div><strong>Ethics in Technology</strong><div class="subj-meta">Ms. Cruz<br>TWF 3:00–4:30 · Rm 412</div></div><span class="tag success" style="margin-left:auto;flex-shrink:0;">Enrolled</span></div>
+        <div class="subj-card"><div class="subj-icon" style="background:#eaf7f0;">🏃</div><div class="subj-info"><div class="subj-code">PE301 · 2 Units · GE</div><strong>Physical Education 3</strong><div class="subj-meta">Mr. Garcia<br>M 4:30–6:00 · Gymnasium</div></div><span class="tag success" style="margin-left:auto;flex-shrink:0;">Enrolled</span></div>
+        <div class="subj-card"><div class="subj-icon" style="background:#fdf8e8;">🤝</div><div class="subj-info"><div class="subj-code">NSTP201 · 3 Units · NSTP</div><strong>NSTP – CWTS 2</strong><div class="subj-meta">NSTP Office<br>SAT 7:00–10:00 · Hall B</div></div><span class="tag warn" style="margin-left:auto;flex-shrink:0;">Incomplete</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ TUITION FEE ══════════════ -->
+    <div class="view" id="view-tuition">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Tuition Fee</h2><p>2nd Semester · S.Y. 2024–2025 · Assessed: March 7, 2025</p></div>
+        <button class="btn-primary" onclick="showToast('Statement of Account downloaded','success')"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h14M10 3v10M5 9l5 5 5-5"/></svg>Download SOA</button>
+      </div>
+      <div class="tuition-summary">
+        <div class="tuition-left"><h3>Total Assessment</h3><div class="total-amt">₱18,370.00</div><div class="total-label">21 units · After scholarship discount</div></div>
+        <div class="tuition-badges">
+          <div class="tbadge"><span class="tbval">₱9,185</span><div class="tblabel">Amount Paid</div></div>
+          <div class="tbadge"><span class="tbval" style="color:#fdd36e;">₱9,185</span><div class="tblabel">Balance Due</div></div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:12px;">Fee Breakdown</div>
+          <div class="fee-breakdown">
+            <div class="fee-row"><div class="fee-name">Tuition Fee<small>₱800/unit × 21 units</small></div><div class="fee-amt">₱16,800.00</div></div>
+            <div class="fee-row"><div class="fee-name">Miscellaneous Fee<small>Registration, library, lab usage</small></div><div class="fee-amt">₱2,400.00</div></div>
+            <div class="fee-row"><div class="fee-name">Athletic Fee</div><div class="fee-amt">₱200.00</div></div>
+            <div class="fee-row"><div class="fee-name">Student Government Fee</div><div class="fee-amt">₱150.00</div></div>
+            <div class="fee-row"><div class="fee-name">ICT / Computer Lab Fee</div><div class="fee-amt">₱500.00</div></div>
+            <div class="fee-row"><div class="fee-name">Scholarship Discount<small>Academic Merit – 10%</small></div><div class="fee-amt disc">−₱1,680.00</div></div>
+            <div class="fee-row"><div class="fee-name" style="font-size:14px;">Total Due</div><div class="fee-amt" style="font-size:16px;color:var(--blue-dk);">₱18,370.00</div></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:12px;">Payment Schedule</div>
+          <div class="fee-breakdown">
+            <div class="fee-row"><div class="fee-name">Downpayment (50%)<small>Due upon enrollment</small></div><div style="text-align:right;"><div class="fee-amt">₱9,185.00</div><span class="tag success" style="margin-top:3px;">Paid</span></div></div>
+            <div class="fee-row"><div class="fee-name">2nd Installment (25%)<small>Due April 15, 2025</small></div><div style="text-align:right;"><div class="fee-amt">₱4,592.50</div><span class="tag warn" style="margin-top:3px;">Upcoming</span></div></div>
+            <div class="fee-row"><div class="fee-name">Final Installment (25%)<small>Due May 31, 2025</small></div><div style="text-align:right;"><div class="fee-amt">₱4,592.50</div><span class="tag general" style="margin-top:3px;">Pending</span></div></div>
+          </div>
+          <div style="background:#fdf0e8;border:1px solid var(--accent-soft);border-radius:10px;padding:14px 16px;margin-top:14px;display:flex;gap:11px;align-items:flex-start;">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#b96538" stroke-width="1.8" style="flex-shrink:0;margin-top:1px;"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 14v.5"/></svg>
+            <div style="font-size:12px;color:var(--red-dk);line-height:1.6;">Next payment of <strong>₱4,592.50</strong> is due on <strong>April 15, 2025</strong>. Late payments incur a 2% surcharge per month.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ PAYMENT MONITORING ══════════════ -->
+    <div class="view" id="view-payments">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Payment Monitoring</h2><p>Track your payment history and outstanding balance</p></div>
+        <button class="btn-primary" onclick="showToast('Redirecting to payment gateway…','success')">Pay Now</button>
+      </div>
+      <div class="payment-progress">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <div><div style="font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:var(--text);">₱9,185.00 paid of ₱18,370.00</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">50% settled · ₱9,185 remaining balance</div></div>
+          <div style="text-align:right;"><div style="font-family:'Sora',sans-serif;font-size:24px;font-weight:700;color:var(--blue-dk);">50%</div><div style="font-size:11px;color:var(--muted);">Paid</div></div>
+        </div>
+        <div class="pay-progress-bar"><div class="pay-progress-fill" style="width:50%"></div></div>
+        <div class="pay-labels"><span>₱0</span><span>₱4,593</span><span>₱9,185 ← Current</span><span>₱13,778</span><span>₱18,370</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val" style="color:#1a7a4a;">₱9,185</span><span class="stat-label">Total Paid</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon yellow"></div><span class="stat-change warn">Due Apr 15</span></div><span class="stat-val" style="color:#7a6a1a;">₱4,593</span><span class="stat-label">Next Due Amount</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon red"></div></div><span class="stat-val">₱9,185</span><span class="stat-label">Outstanding Balance</span></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">Transaction History</span><a class="panel-link" onclick="showToast('Exporting transaction history…','success')">Export PDF</a></div>
+        <div class="pay-item"><div class="pay-icon paid"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg></div><div class="pay-info"><strong>Downpayment – 2nd Semester 2024–25</strong><span>Mar 7, 2025 · OR No. 2025-004521 · Cash</span></div><div class="pay-right"><span class="pay-amount">₱9,185.00</span><span class="pay-status-pill paid">Paid</span></div></div>
+        <div class="pay-item"><div class="pay-icon pending"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#7a6a1a" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 2"/></svg></div><div class="pay-info"><strong>2nd Installment – 2nd Semester 2024–25</strong><span>Due April 15, 2025</span></div><div class="pay-right"><span class="pay-amount">₱4,592.50</span><span class="pay-status-pill pending">Upcoming</span></div></div>
+        <div class="pay-item"><div class="pay-icon pending"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#7a6a1a" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 2"/></svg></div><div class="pay-info"><strong>Final Installment – 2nd Semester 2024–25</strong><span>Due May 31, 2025</span></div><div class="pay-right"><span class="pay-amount">₱4,592.50</span><span class="pay-status-pill pending">Upcoming</span></div></div>
+        <div class="pay-item"><div class="pay-icon paid"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg></div><div class="pay-info"><strong>Full Payment – 1st Semester 2024–25</strong><span>Aug 15, 2024 · OR No. 2024-007832 · GCash</span></div><div class="pay-right"><span class="pay-amount">₱18,370.00</span><span class="pay-status-pill paid">Paid</span></div></div>
+        <div class="pay-item"><div class="pay-icon overdue"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#b96538" stroke-width="2"><path d="M10 3l7 14H3L10 3zM10 9v4M10 15v.5"/></svg></div><div class="pay-info"><strong>Late Payment Surcharge – 1st Sem 2023–24</strong><span>Mar 2, 2024 · Penalty for overdue balance</span></div><div class="pay-right"><span class="pay-amount">₱367.40</span><span class="pay-status-pill overdue">Late</span></div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ CONTACT INFO ══════════════ -->
+    <div class="view" id="view-contact">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Contact Information</h2><p>Keep your personal and emergency contact details up to date</p></div>
+        <button class="btn-primary" onclick="saveContact()"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h14M12 3l4 4-9 9H3v-4z"/></svg>Save Changes</button>
+      </div>
+      <div class="contact-tabs">
+        <div class="ctab active" onclick="switchContactTab(this,'ctab-personal')">Personal</div>
+        <div class="ctab" onclick="switchContactTab(this,'ctab-guardian')">Guardian / Emergency</div>
+        <div class="ctab" onclick="switchContactTab(this,'ctab-address')">Address</div>
+      </div>
+      <div id="ctab-personal">
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-head"><span class="panel-title">Personal Details</span></div>
+          <div class="field-group" style="grid-template-columns:1fr 1fr 1fr;">
+            <div class="field-item"><div class="field-label">First Name</div><input type="text" value="Juan"/></div>
+            <div class="field-item"><div class="field-label">Middle Name</div><input type="text" value="dela Cruz"/></div>
+            <div class="field-item"><div class="field-label">Last Name</div><input type="text" value="Santos"/></div>
+            <div class="field-item"><div class="field-label">Date of Birth</div><input type="date" value="2003-03-12"/></div>
+            <div class="field-item"><div class="field-label">Civil Status</div><select><option>Single</option><option>Married</option><option>Other</option></select></div>
+            <div class="field-item"><div class="field-label">Nationality</div><input type="text" value="Filipino"/></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Contact Details</span></div>
+          <div class="field-group">
+            <div class="field-item"><div class="field-label">Personal Email</div><input type="email" value="juansantos2003@gmail.com"/></div>
+            <div class="field-item"><div class="field-label">School Email</div><input type="email" value="juan.santos@acts.edu.ph" readonly style="background:var(--off);color:var(--muted);"/></div>
+            <div class="field-item"><div class="field-label">Mobile Number</div><input type="tel" value="+63 912 345 6789"/></div>
+            <div class="field-item"><div class="field-label">Alternate Number</div><input type="tel" placeholder="Optional"/></div>
+          </div>
+        </div>
+      </div>
+      <div id="ctab-guardian" style="display:none;">
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-head"><span class="panel-title">Guardian / Parent Information</span></div>
+          <div class="field-group" style="grid-template-columns:1fr 1fr 1fr;">
+            <div class="field-item"><div class="field-label">Guardian Name</div><input type="text" value="Maria Santos"/></div>
+            <div class="field-item"><div class="field-label">Relationship</div><select><option>Mother</option><option>Father</option><option>Other</option></select></div>
+            <div class="field-item"><div class="field-label">Occupation</div><input type="text" value="Teacher"/></div>
+            <div class="field-item"><div class="field-label">Mobile Number</div><input type="tel" value="+63 923 456 7890"/></div>
+            <div class="field-item"><div class="field-label">Email Address</div><input type="email" value="m.santos@email.com"/></div>
+            <div class="field-item"><div class="field-label">Office / Landline</div><input type="tel" placeholder="Optional"/></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Emergency Contact</span></div>
+          <div class="field-group">
+            <div class="field-item"><div class="field-label">Contact Name</div><input type="text" value="Pedro Santos"/></div>
+            <div class="field-item"><div class="field-label">Relationship</div><input type="text" value="Father"/></div>
+            <div class="field-item"><div class="field-label">Mobile Number</div><input type="tel" value="+63 934 567 8901"/></div>
+            <div class="field-item"><div class="field-label">Email Address</div><input type="email" placeholder="Optional"/></div>
+          </div>
+        </div>
+      </div>
+      <div id="ctab-address" style="display:none;">
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-head"><span class="panel-title">Current / Residential Address</span></div>
+          <div class="field-group" style="grid-template-columns:1fr 1fr 1fr;">
+            <div class="field-item" style="grid-column:1/-1;"><div class="field-label">Street / Building / Unit No.</div><input type="text" value="123 Sampaguita Street, Barangay Sta. Mesa Heights"/></div>
+            <div class="field-item"><div class="field-label">City / Municipality</div><input type="text" value="Quezon City"/></div>
+            <div class="field-item"><div class="field-label">Province / Region</div><input type="text" value="Metro Manila (NCR)"/></div>
+            <div class="field-item"><div class="field-label">ZIP Code</div><input type="text" value="1114"/></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Permanent / Provincial Address</span></div>
+          <div class="field-group" style="grid-template-columns:1fr 1fr 1fr;">
+            <div class="field-item" style="grid-column:1/-1;"><div class="field-label">Street / Barangay</div><input type="text" value="456 Rizal Street, Barangay San Antonio"/></div>
+            <div class="field-item"><div class="field-label">City / Municipality</div><input type="text" value="San Jose del Monte"/></div>
+            <div class="field-item"><div class="field-label">Province</div><input type="text" value="Bulacan"/></div>
+            <div class="field-item"><div class="field-label">ZIP Code</div><input type="text" value="3023"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ MY PROFILE ══════════════ -->
+    <div class="view" id="view-profile">
+      <div class="page-head"><div class="page-head-left"><h2>My Profile</h2><p>Student academic record overview</p></div></div>
+      <div class="profile-grid">
+        <div>
+          <div class="profile-card">
+            <div class="profile-banner"></div>
+            <div class="profile-avatar-wrap">
+              <div class="profile-avatar">JS</div>
+              <div class="profile-name">Juan dela Cruz Santos</div>
+              <div class="profile-id">2024-00142</div>
+              <div class="profile-status">Enrolled – Active</div>
+            </div>
+            <div class="profile-info-list">
+              <div class="pil-row"><span class="label">Program</span><span class="val">BS Computer Science</span></div>
+              <div class="pil-row"><span class="label">Year Level</span><span class="val">3rd Year</span></div>
+              <div class="pil-row"><span class="label">Section</span><span class="val">Block 3A</span></div>
+              <div class="pil-row"><span class="label">Semester</span><span class="val">2nd Sem 2024–25</span></div>
+              <div class="pil-row"><span class="label">GWA</span><span class="val" style="color:var(--blue-dk);font-weight:700;">1.85</span></div>
+              <div class="pil-row"><span class="label">Academic Status</span><span class="val" style="color:#1a7a4a;">Dean's List</span></div>
+              <div class="pil-row"><span class="label">Units Earned</span><span class="val">89 / 180</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-right-col">
+          <div class="panel">
+            <div class="panel-head"><span class="panel-title">Academic Summary</span></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--border);">
+              <div style="padding:16px 20px;border-right:1px solid var(--border);"><div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Cum GWA</div><div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:var(--blue-dk);">1.85</div></div>
+              <div style="padding:16px 20px;border-right:1px solid var(--border);"><div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Units Enrolled</div><div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:var(--text);">21</div></div>
+              <div style="padding:16px 20px;"><div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Attendance</div><div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:#1a7a4a;">94%</div></div>
+            </div>
+            <div style="padding:16px 20px;">
+              <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;">Semester Grade Summary</div>
+              <div style="display:flex;flex-direction:column;gap:9px;">
+                <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text);flex:1;">Data Structures &amp; Algorithms</span><span class="grade-pill b" style="min-width:38px;">1.50</span></div>
+                <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text);flex:1;">Software Engineering</span><span class="grade-pill b" style="min-width:38px;">1.75</span></div>
+                <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text);flex:1;">Database Management Systems</span><span class="grade-pill b" style="min-width:38px;">1.50</span></div>
+                <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text);flex:1;">Computer Networks</span><span class="grade-pill b" style="min-width:38px;">2.00</span></div>
+                <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text);flex:1;">Ethics in Technology</span><span class="grade-pill b" style="min-width:38px;">1.75</span></div>
+                <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text);flex:1;">Physical Education 3</span><span class="grade-pill a" style="min-width:38px;">1.25</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span class="panel-title">Quick Actions</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 18px;">
+              <button class="btn-outline" style="justify-content:center;" onclick="showView('grades',null)">📊 View Grades</button>
+              <button class="btn-outline" style="justify-content:center;" onclick="showView('payments',null)">💳 Pay Tuition</button>
+              <button class="btn-outline" style="justify-content:center;" onclick="showView('evaluation',null)">⭐ Evaluate Prof</button>
+              <button class="btn-outline" style="justify-content:center;" onclick="showToast('Downloading COR…','success')">📄 Download COR</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ LIBRARY SYSTEM ══════════════ -->
+    <div class="view" id="view-library">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Library System</h2><p>Manage your library reservations and borrowing history</p></div>
+        <button class="btn-primary" onclick="showToast('Searching library catalog…','success')"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="5"/><path d="M13 13l4 4"/></svg>Search Catalog</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">3</span><span class="stat-label">Books Borrowed</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val">0</span><span class="stat-label">Late Returns</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon red"></div></div><span class="stat-val">7</span><span class="stat-label">Days Left</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Current Checkouts</span><a class="panel-link" onclick="showToast('Renewing books…','success')">Renew All</a></div>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:12px;height:14px;background:var(--blue);border-radius:2px;flex-shrink:0;margin-top:1px;"></div>
+              <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;color:var(--text);">Data Structures: Fundamentals & Applications</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">By Mark Allen Weiss · Shelf: CS-331</div></div>
+              <div style="text-align:right;flex-shrink:0;"><div style="font-size:11px;color:var(--muted);background:var(--off);padding:3px 8px;border-radius:4px;font-weight:500;">Due Apr 8</div></div>
+            </div>
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:12px;height:14px;background:var(--red);border-radius:2px;flex-shrink:0;margin-top:1px;"></div>
+              <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;color:var(--text);">Software Engineering: A Practitioner's Approach</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">By Roger Pressman · Shelf: SE-400</div></div>
+              <div style="text-align:right;flex-shrink:0;"><div style="font-size:11px;color:var(--muted);background:var(--off);padding:3px 8px;border-radius:4px;font-weight:500;">Due Apr 5</div></div>
+            </div>
+            <div style="padding:16px 20px;display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:12px;height:14px;background:#1aac87;border-radius:2px;flex-shrink:0;margin-top:1px;"></div>
+              <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;color:var(--text);">Database Database System Concepts</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">By Silberschatz et al. · Shelf: DB-360</div></div>
+              <div style="text-align:right;flex-shrink:0;"><div style="font-size:11px;color:var(--muted);background:var(--off);padding:3px 8px;border-radius:4px;font-weight:500;">Due Apr 15</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Reserved Books</span><a class="panel-link">View All</a></div>
+          <div style="padding:18px 20px;text-align:center;">
+            <div style="width:48px;height:48px;background:var(--off);border-radius:10px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.5"><path d="M3 3h2v14H3zM15 3h2v14h-2zM5 5h10v10H5z"/><path d="M8 8h4M8 11h4"/></svg></div>
+            <div style="font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:2px;">No Reservations</div>
+            <div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;">You have no books on reserve at this time.</div>
+            <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showToast('Browse library catalog…','success')">Browse Catalog</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">Borrowing History</span><a class="panel-link">Show More</a></div>
+        <table style="margin-bottom:0;">
+          <thead><tr><th>Title</th><th>Author</th><th>Borrowed Date</th><th>Return Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Computer Networks: A Top-Down Approach</td><td>Kurose & Ross</td><td>Mar 10, 2025</td><td>Mar 24, 2025</td><td><span class="tag success">Returned</span></td></tr>
+            <tr><td>Discrete Mathematics and Its Applications</td><td>Kenneth Rosen</td><td>Feb 28, 2025</td><td>Mar 14, 2025</td><td><span class="tag success">Returned</span></td></tr>
+            <tr><td>Introduction to Algorithms</td><td>CLRS</td><td>Feb 15, 2025</td><td>Mar 1, 2025</td><td><span class="tag success">Returned</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════ DOCUMENTS ══════════════ -->
+    <div class="view" id="view-documents">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Documents</h2><p>Upload and track submission of required documents</p></div>
+        <button class="btn-primary" onclick="document.getElementById('docUpload').click()"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="5" x2="10" y2="15"/><line x1="5" y1="10" x2="15" y2="10"/></svg>Upload Document</button>
+        <input type="file" id="docUpload" style="display:none;" onchange="showToast('Document uploaded successfully','success')"/>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val" style="color:#1a7a4a;">5</span><span class="stat-label">Approved</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon yellow"></div></div><span class="stat-val" style="color:#7a6a1a;">2</span><span class="stat-label">Pending</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon red"></div></div><span class="stat-val">1</span><span class="stat-label">Revisions Required</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">1</span><span class="stat-label">Not Yet Submitted</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="doc-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:11px;">
+              <div style="width:36px;height:36px;background:#eaf7f0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">✓</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">NSO Birth Certificate</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">Uploaded Mar 5</div></div>
+            </div>
+            <span class="tag success">Approved</span>
+          </div>
+        </div>
+        <div class="doc-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:11px;">
+              <div style="width:36px;height:36px;background:#e8f3fb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">📝</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Medical Clearance Form</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">Uploaded Feb 28</div></div>
+            </div>
+            <span class="tag success">Approved</span>
+          </div>
+        </div>
+        <div class="doc-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:11px;">
+              <div style="width:36px;height:36px;background:#fdf8e8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">⏳</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Community Tax Certificate</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">Awaiting Review</div></div>
+            </div>
+            <span class="tag warn">Pending</span>
+          </div>
+        </div>
+        <div class="doc-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:11px;">
+              <div style="width:36px;height:36px;background:#fdf0e8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">⚠️</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Barangay Clearance</div><div style="font-size:11px;color:#b96538;margin-top:1px;">Revisions needed</div></div>
+            </div>
+            <span class="tag urgent">Revisions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ ACADEMIC STANDING ══════════════ -->
+    <div class="view" id="view-standing">
+      <div class="page-head"><div class="page-head-left"><h2>Academic Standing</h2><p>Your detailed academic performance and progress</p></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">1.85</span><span class="stat-label">Cumulative GWA</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val" style="color:#1a7a4a;">Dean's List</span><span class="stat-label">Current Honors</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon purple"></div></div><span class="stat-val">89</span><span class="stat-label">Cumulative Units</span></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">GPA Trend (Last 4 Semesters)</span></div>
+          <div style="padding:20px;background:var(--off);border-radius:8px;margin:14px;height:180px;display:flex;align-items:flex-end;justify-content:space-around;gap:12px;">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="background:var(--blue-lt);width:100%;height:60px;border-radius:6px;opacity:.6;"></div>
+              <div style="font-size:10px;color:var(--muted);font-weight:500;">1st Sem<br/>2023-24<br/>1.92</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="background:var(--blue-lt);width:100%;height:85px;border-radius:6px;opacity:.7;"></div>
+              <div style="font-size:10px;color:var(--muted);font-weight:500;">2nd Sem<br/>2023-24<br/>1.78</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="background:var(--blue-lt);width:100%;height:72px;border-radius:6px;opacity:.65;"></div>
+              <div style="font-size:10px;color:var(--muted);font-weight:500;">1st Sem<br/>2024-25<br/>1.88</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div style="background:var(--blue);width:100%;height:90px;border-radius:6px;"></div>
+              <div style="font-size:10px;color:var(--muted);font-weight:500;">2nd Sem<br/>2024-25<br/>1.85</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Academic Requirements</span></div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:24px;height:24px;background:#eaf7f0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1a7a4a;font-weight:700;font-size:12px;">✓</div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:500;color:var(--text);">Minimum GWA</div><div style="font-size:10.5px;color:var(--muted);">Target: ≤ 1.75</div></div>
+              <span style="font-size:12px;font-weight:600;color:#1a7a4a;">1.85 ⚠️</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:24px;height:24px;background:#eaf7f0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1a7a4a;font-weight:700;font-size:12px;">✓</div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:500;color:var(--text);">Minimum Grade</div><div style="font-size:10.5px;color:var(--muted);">No grade below 3.0</div></div>
+              <span style="font-size:12px;font-weight:600;color:#1a7a4a;">Passed</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:24px;height:24px;background:#eaf7f0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1a7a4a;font-weight:700;font-size:12px;">✓</div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:500;color:var(--text);">Enrollment Requirement</div><div style="font-size:10.5px;color:var(--muted);">12 units minimum</div></div>
+              <span style="font-size:12px;font-weight:600;color:#1a7a4a;">21</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">Sem-by-Sem Performance</span></div>
+        <table style="margin-bottom:0;">
+          <thead><tr><th>Semester</th><th>Subjects</th><th>Units</th><th>GWA</th><th>Comments</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600;">1st Sem 2023-24</td><td>7</td><td>21</td><td><span class="grade-pill b">1.92</span></td><td>On Dean's List</td></tr>
+            <tr><td style="font-weight:600;">2nd Sem 2023-24</td><td>7</td><td>21</td><td><span class="grade-pill a">1.78</span></td><td>Cum Laude target</td></tr>
+            <tr><td style="font-weight:600;">1st Sem 2024-25</td><td>7</td><td>21</td><td><span class="grade-pill b">1.88</span></td><td>On Dean's List</td></tr>
+            <tr><td style="font-weight:600;">2nd Sem 2024-25</td><td>7</td><td>21</td><td><span class="grade-pill b">1.85</span><strong style="color:var(--blue-dk);">*</strong></td><td>Pending Finals</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:12px 20px;font-size:10.5px;color:var(--muted);">* Preliminary grade · Subject to changes after final exams</div>
+      </div>
+    </div>
+
+    <!-- ══════════════ SCHOLARSHIPS & FINANCIAL AID ══════════════ -->
+    <div class="view" id="view-scholarship">
+      <div class="page-head">
+        <div class="page-head-left"><h2>Scholarships & Financial Aid</h2><p>Manage scholarship status and apply for financial assistance</p></div>
+        <button class="btn-primary" onclick="showToast('Opening scholarship applications…','success')"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="5" x2="10" y2="15"/><line x1="5" y1="10" x2="15" y2="10"/></svg>Apply for Aid</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green"></div></div><span class="stat-val" style="color:#1a7a4a;">₱1,680</span><span class="stat-label">Discount/Semester</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue"></div></div><span class="stat-val">₱3,360</span><span class="stat-label">Total Aid Received</span></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon purple"></div></div><span class="stat-val">10%</span><span class="stat-label">Current Coverage</span></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Active Scholarships</span></div>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Academic Merit Scholarship (10%)</div>
+                <div style="font-size:11.5px;color:var(--muted);line-height:1.5;">Full tuition discount based on academic excellence. GWA ≤ 1.85 required for continuation.</div>
+              </div>
+              <span class="tag success" style="white-space:nowrap;flex-shrink:0;">Active</span>
+            </div>
+            <div style="padding:16px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Partial Tuition Assistance</div>
+                <div style="font-size:11.5px;color:var(--muted);line-height:1.5;">Need-based aid program for deserving students. Financial requirements must be met annually.</div>
+              </div>
+              <span class="tag info" style="white-space:nowrap;flex-shrink:0;">Pending</span>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Available Programs</span></div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:var(--white);" onmouseover="this.style.background='var(--off)'" onmouseout="this.style.background='var(--white)'">
+              <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">Excellence Scholarship</div>
+              <div style="font-size:10.5px;color:var(--muted);">Up to 80% tuition · GPA ≤ 1.5 required</div>
+              <button class="btn-outline" style="width:100%;margin-top:8px;justify-content:center;font-size:11px;padding:5px 10px;" onclick="showToast('Opening application…','success')">Apply</button>
+            </div>
+            <div style="padding:12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:var(--white);" onmouseover="this.style.background='var(--off)'" onmouseout="this.style.background='var(--white)'">
+              <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">Student Assistant Program</div>
+              <div style="font-size:10.5px;color:var(--muted);">₱6,000/semester stipend</div>
+              <button class="btn-outline" style="width:100%;margin-top:8px;justify-content:center;font-size:11px;padding:5px 10px;" onclick="showToast('Opening application…','success')">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ ACCOUNT SETTINGS ══════════════ -->
+    <div class="view" id="view-settings">
+      <div class="page-head"><div class="page-head-left"><h2>Account Settings</h2><p>Manage your account security, preferences, and notifications</p></div></div>
+      <div class="settings-tabs">
+        <div class="stab active" onclick="switchSettingsTab(this,'stab-security')">🔒 Security</div>
+        <div class="stab" onclick="switchSettingsTab(this,'stab-privacy')">👁️ Privacy</div>
+        <div class="stab" onclick="switchSettingsTab(this,'stab-notif')">🔔 Notifications</div>
+        <div class="stab" onclick="switchSettingsTab(this,'stab-pref')">⚙️ Preferences</div>
+      </div>
+      <div id="stab-security">
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-head"><span class="panel-title">Password & Login Security</span></div>
+          <div style="padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Password</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Last changed 45 days ago</div></div>
+            <button class="btn-outline" onclick="showToast('Password change initiated…','success')">Change</button>
+          </div>
+          <div style="padding:20px;display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Two-Factor Authentication</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;"><span class="tag warn">Not Enabled</span><span style="margin-left:8px;font-weight:500;color:var(--text);">Add extra security layer</span></div></div>
+            <button class="btn-primary" onclick="showToast('Setting up 2FA…','success')">Enable</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Active Sessions</span></div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;background:#e8f3fb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;">💻</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Chrome on Windows</div><div style="font-size:11px;color:var(--muted);">192.168.1.5 · Last active now</div></div>
+            </div>
+            <span style="font-size:11px;background:#eaf7f0;color:#1a7a4a;padding:3px 9px;border-radius:4px;font-weight:500;">Current</span>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;background:var(--off);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;">📱</div>
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Safari on iPhone</div><div style="font-size:11px;color:var(--muted);">203.122.4.8 · 3 days ago</div></div>
+            </div>
+            <button class="btn-outline" style="padding:5px 12px;font-size:11px;" onclick="showToast('Session logged out','success')">Logout</button>
+          </div>
+        </div>
+      </div>
+      <div id="stab-privacy" style="display:none;">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Privacy Controls</span></div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Profile Visibility</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Who can see your profile information</div></div>
+            <select style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;"><option>Classmates Only</option><option>All Students</option><option>Private</option></select>
+          </div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Directory Listing</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Appear in college directory</div></div>
+            <label style="cursor:pointer;"><input type="checkbox" checked style="margin-right:6px;"/>Visible</label>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Contact Information</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Which students can contact you</div></div>
+            <select style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;"><option>Everyone</option><option>Classmates</option><option>Nobody</option></select>
+          </div>
+        </div>
+      </div>
+      <div id="stab-notif" style="display:none;">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Notification Preferences</span></div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px;">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox" checked/>
+              <div><div style="font-size:12.5px;font-weight:500;color:var(--text);">Grades Posted</div><div style="font-size:10.5px;color:var(--muted);">New grades available</div></div>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox" checked/>
+              <div><div style="font-size:12.5px;font-weight:500;color:var(--text);">Important Announcements</div><div style="font-size:10.5px;color:var(--muted);">Critical updates from college</div></div>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox" checked/>
+              <div><div style="font-size:12.5px;font-weight:500;color:var(--text);">Payment Reminders</div><div style="font-size:10.5px;color:var(--muted);">Tuition and exam payment due dates</div></div>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox"/>
+              <div><div style="font-size:12.5px;font-weight:500;color:var(--text);">Course/Class Updates</div><div style="font-size:10.5px;color:var(--muted);">Changes to your enrolled subjects</div></div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div id="stab-pref" style="display:none;">
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-head"><span class="panel-title">General Preferences</span></div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Theme</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Display appearance</div></div>
+            <select style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;"><option>Light</option><option>Dark</option><option>Auto</option></select>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Language</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Portal language</div></div>
+            <select style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;"><option>English</option><option>Filipino</option><option>Spanish</option></select>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Advanced</span></div>
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">API Access</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">For third-party integrations</div></div>
+            <button class="btn-outline" onclick="showToast('Opening API documentation…','success')">Manage</button>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div><div style="font-size:12.5px;font-weight:600;color:var(--text);">Data Export</div><div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Download your portal data</div></div>
+            <button class="btn-outline" onclick="showToast('Preparing data export…','success')">Export</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>
