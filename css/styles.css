@@ -2220,6 +2220,222 @@ tbody td {
 }
 
 /* ── DOCUMENT MANAGEMENT ── */
+.doc-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  transition: background .14s, border-left-color .15s;
+}
+
+.doc-row:last-child {
+  border-bottom: none;
+}
+
+.doc-row:hover {
+  background: var(--off);
+}
+
+.doc-row-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.doc-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.doc-row-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.doc-row-sub {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .14s, border-color .14s;
+}
+
+.doc-upload-btn:hover {
+  background: #e8f3fb;
+  border-color: var(--blue-lt);
+}
+
+/* ── ENROLLMENT SECTION PICKER ── */
+.enroll-prog-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+  position: relative;
+}
+.enroll-prog-card:hover {
+  border-color: var(--blue-lt);
+  background: var(--off);
+}
+.enroll-prog-card.selected {
+  border-color: var(--blue);
+  background: #edf5fb;
+  box-shadow: 0 2px 8px rgba(46,120,184,.10);
+}
+.enroll-prog-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.enroll-prog-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.enroll-prog-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.enroll-prog-check {
+  margin-left: auto;
+  width: 22px;
+  height: 22px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.enroll-sec-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+.enroll-sec-card:hover {
+  border-color: var(--blue-lt);
+  background: var(--off);
+}
+.enroll-sec-card.selected {
+  border-color: var(--blue);
+  background: #edf5fb;
+  box-shadow: 0 2px 10px rgba(46,120,184,.12);
+}
+.enroll-sec-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.enroll-sec-info {
+  flex: 1;
+  min-width: 0;
+}
+.enroll-sec-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.enroll-sec-meta {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.enroll-sec-slots {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  min-width: 90px;
+}
+.enroll-sec-slot-bar {
+  width: 80px;
+  height: 5px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.enroll-sec-slot-text {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.enroll-sec-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--blue);
+  flex-shrink: 0;
+  transition: border-color .15s;
+}
+.enroll-sec-card.selected .enroll-sec-radio {
+  border-color: var(--blue);
+}
+
+@media (max-width: 600px) {
+  .enroll-sec-slots { display: none; }
+  #view-enrollment .panel > div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr;
+  }
+}
+
 .doc-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -2411,6 +2627,50 @@ tbody td {
   .eval-done-badge,
   .eval-pending-badge {
     margin-left: 0;
+  }
+
+  /* ── LIVE COLOR: TOPBAR ACCENT ── */
+  .topbar {
+    border-bottom: 3px solid var(--blue);
+  }
+
+  /* ── LIVE COLOR: STAT CARDS ── */
+  .stat-card:has(.stat-icon.blue)   { border-top: 3px solid var(--blue); }
+  .stat-card:has(.stat-icon.red)    { border-top: 3px solid var(--red); }
+  .stat-card:has(.stat-icon.green)  { border-top: 3px solid #1a7a4a; }
+  .stat-card:has(.stat-icon.yellow) { border-top: 3px solid #c9a800; }
+  .stat-card:has(.stat-icon.purple) { border-top: 3px solid #7c5cbf; }
+
+  .stat-icon.blue   { background: #cde4f7; }
+  .stat-icon.red    { background: #faddc8; }
+  .stat-icon.green  { background: #c5ecdb; }
+  .stat-icon.yellow { background: #faecc0; }
+  .stat-icon.purple { background: #e0d5f8; }
+
+  /* ── LIVE COLOR: PANEL HEADS ── */
+  .panel-head {
+    border-left: 3px solid var(--blue);
+    background: linear-gradient(90deg, rgba(46, 120, 184, .06) 0%, transparent 70%);
+  }
+
+  /* ── LIVE COLOR: PAGE VIEW HEADINGS ── */
+  .page-head-left h2 {
+    color: var(--blue-dk);
+  }
+
+  /* ── LIVE COLOR: GPA HIGHLIGHT ── */
+  .gpa-highlight {
+    border-top: 3px solid var(--blue);
+  }
+
+  /* ── LIVE COLOR: ENROLL STEPS ── */
+  .enroll-steps {
+    border-top: 3px solid var(--blue-lt);
+  }
+
+  /* ── LIVE COLOR: SUBJECT CARDS ── */
+  .subj-card {
+    border-left: 3px solid var(--blue-lt);
   }
 }
 
@@ -2773,4 +3033,215 @@ tbody td {
 
 .overlay.show {
   display: block;
+}
+
+/* ══════════════════════════════════════════════════
+   LIVE COLOR — SECTION CONTENT ACCENTS
+   Uses the existing CSS custom-property palette.
+   Applied globally (all screen sizes).
+══════════════════════════════════════════════════ */
+
+/* ── Shared: every page heading gets a color bar ── */
+.page-head-left h2 {
+  border-left: 4px solid var(--blue);
+  padding-left: 10px;
+  color: var(--blue-dk);
+}
+
+/* ── Shared: every panel gets a colored top edge ── */
+.panel {
+  border-top: 3px solid var(--blue-lt);
+}
+
+/* ════ GRADE VIEWING ════ */
+#view-grades .page-head-left h2 {
+  border-left-color: var(--blue);
+}
+#view-grades .gpa-highlight {
+  border-top: 3px solid var(--blue);
+  background: linear-gradient(135deg, #edf5fc 0%, var(--white) 60%);
+}
+#view-grades .gpa-num {
+  color: var(--blue);
+}
+#view-grades .grades-table-wrap {
+  border-top: 3px solid var(--blue-mid);
+}
+#view-grades thead th {
+  background: #e8f3fb;
+  color: var(--blue-dk);
+  border-bottom-color: var(--blue-lt);
+}
+
+/* ════ ANNOUNCEMENTS ════ */
+#view-announcements .page-head-left h2 {
+  border-left-color: var(--red);
+  color: var(--red-dk);
+}
+#view-announcements .panel {
+  border-top: 3px solid var(--red);
+}
+#view-announcements .annc-item {
+  border-left: 3px solid transparent;
+  transition: border-left-color .15s, background .14s;
+}
+#view-announcements .annc-item:hover {
+  border-left-color: var(--red);
+  background: #fef8f5;
+}
+#view-announcements .annc-title {
+  color: var(--blue-dk);
+}
+
+/* ════ PROFESSOR EVALUATION ════ */
+#view-evaluation .page-head-left h2 {
+  border-left-color: var(--red);
+  color: var(--red-dk);
+}
+#view-evaluation .eval-intro {
+  border-color: var(--red);
+  border-left: 4px solid var(--red);
+  background: var(--cream);
+}
+#view-evaluation .eval-card {
+  border-top: 3px solid var(--blue-mid);
+}
+#view-evaluation .eval-prof-avatar {
+  box-shadow: 0 0 0 3px rgba(46,120,184,.2);
+}
+#view-evaluation .star.filled {
+  color: #f5a623;
+  text-shadow: 0 0 6px rgba(245,166,35,.4);
+}
+#view-evaluation .eval-done-badge {
+  border-color: #1a7a4a;
+}
+#view-evaluation .eval-pending-badge {
+  border-color: var(--red);
+  background: #fdf0e8;
+  color: var(--red-dk);
+}
+
+/* ════ ENROLLMENT ════ */
+#view-enrollment .page-head-left h2 {
+  border-left-color: #1a7a4a;
+  color: #1a4a30;
+}
+#view-enrollment .enroll-steps {
+  border-top: 3px solid #1a7a4a;
+  background: linear-gradient(90deg, #f0faf5 0%, var(--white) 60%);
+}
+#view-enrollment .estep-circle.done {
+  background: #1a7a4a;
+  color: #fff;
+}
+#view-enrollment .estep-circle.active {
+  background: var(--blue);
+  box-shadow: 0 0 0 4px rgba(46,120,184,.2);
+}
+#view-enrollment .estep-line.done {
+  background: #1a7a4a;
+}
+#view-enrollment .grades-table-wrap {
+  border-top: 3px solid #1a7a4a;
+}
+#view-enrollment thead th {
+  background: #eaf7f0;
+  color: #1a4a30;
+  border-bottom-color: #b8e6cf;
+}
+
+/* ════ SUBJECT ASSIGNMENT ════ */
+#view-subjects .page-head-left h2 {
+  border-left-color: var(--blue-mid);
+}
+#view-subjects .subj-card {
+  border-left: 4px solid var(--blue-lt);
+  transition: border-left-color .18s, box-shadow .18s;
+}
+#view-subjects .subj-card:hover {
+  border-left-color: var(--blue);
+  box-shadow: 0 4px 14px rgba(46,120,184,.13);
+}
+#view-subjects .subj-info strong {
+  color: var(--blue-dk);
+}
+
+/* ════ PAYMENT MONITORING ════ */
+#view-payments .page-head-left h2 {
+  border-left-color: #1a7a4a;
+  color: #1a4a30;
+}
+#view-payments .payment-progress {
+  border-top: 3px solid var(--blue);
+  background: linear-gradient(135deg, #edf5fc 0%, var(--white) 60%);
+}
+#view-payments .pay-progress-fill {
+  background: linear-gradient(90deg, #1a7a4a, var(--blue-mid));
+}
+#view-payments .panel {
+  border-top: 3px solid var(--blue);
+}
+#view-payments .pay-item {
+  border-left: 3px solid transparent;
+  transition: border-left-color .15s, background .12s;
+}
+#view-payments .pay-item:hover {
+  background: var(--off);
+  border-left-color: var(--blue-lt);
+}
+#view-payments .pay-icon.paid   { background: #c5ecdb; }
+#view-payments .pay-icon.pending { background: #faecc0; }
+#view-payments .pay-icon.overdue { background: #faddc8; }
+
+/* ════ LIBRARY SYSTEM ════ */
+#view-library .page-head-left h2 {
+  border-left-color: #1aac87;
+  color: #0a6651;
+}
+#view-library .panel {
+  border-top: 3px solid #1aac87;
+}
+#view-library thead th {
+  background: #e0f5f0;
+  color: #0a6651;
+  border-bottom-color: #a0ddd0;
+}
+
+/* ════ DOCUMENTS ════ */
+#view-documents .page-head-left h2 {
+  border-left-color: var(--blue-mid);
+}
+#view-documents .doc-card {
+  border-top: 3px solid var(--blue-lt);
+  transition: border-top-color .18s, box-shadow .18s;
+}
+#view-documents .doc-card:hover {
+  border-top-color: var(--blue);
+  box-shadow: 0 4px 14px rgba(46,120,184,.11);
+}
+
+/* ════ ACADEMIC STANDING ════ */
+#view-standing .page-head-left h2 {
+  border-left-color: var(--blue);
+}
+#view-standing .panel {
+  border-top: 3px solid var(--blue);
+}
+#view-standing thead th {
+  background: #e8f3fb;
+  color: var(--blue-dk);
+  border-bottom-color: var(--blue-lt);
+}
+
+/* ════ SCHOLARSHIPS ════ */
+#view-scholarship .page-head-left h2 {
+  border-left-color: #1a7a4a;
+  color: #1a4a30;
+}
+#view-scholarship .panel {
+  border-top: 3px solid #1a7a4a;
+}
+#view-scholarship .panel-title {
+  color: #1a4a30;
 }

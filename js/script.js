@@ -19,7 +19,10 @@ function runLoader() {
     setTimeout(() => {
       const screen = document.getElementById('loading-screen');
       screen.classList.add('fade-out');
-      screen.addEventListener('transitionend', () => screen.style.display = 'none', { once: true });
+      screen.addEventListener('transitionend', () => {
+        screen.style.display = 'none';
+        renderPreSched(selectedSec.id);
+      }, { once: true });
     }, 500);
     return;
   }
@@ -166,6 +169,176 @@ function closeModal(id) {
 function handleLogout() {
   openModal('logoutModal');
 }
+
+// ═══════════════ DOCUMENT UPLOAD ═══════════════
+function uploadDoc(input, key, label) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const maxMB = 5;
+  if (file.size > maxMB * 1024 * 1024) {
+    showToast('File too large. Maximum size is 5 MB.', 'error');
+    input.value = '';
+    return;
+  }
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' });
+  const tag = document.getElementById('doctag-' + key);
+  const meta = document.getElementById('docmeta-' + key);
+  const row = document.getElementById('docrow-' + key);
+  if (tag) {
+    tag.className = 'tag warn';
+    tag.textContent = 'Pending';
+  }
+  if (meta) {
+    meta.textContent = 'Uploaded ' + dateStr + ' · ' + file.name;
+    meta.style.color = 'var(--muted)';
+  }
+  if (row) {
+    row.style.borderLeft = '3px solid #c9a800';
+    row.style.background = '#fdfbf0';
+  }
+  showToast(label + ' uploaded — awaiting review', 'success');
+  input.value = '';
+}
+
+// ── ENROLLMENT: Program + Section Picker ──────────────────────────────────────
+
+// Pre-assigned subjects per section (freshman 1st semester)
+const sectionSchedules = {
+  '1a': [
+    { code:'GE001', title:'Understanding the Self',                units:3, type:'Lec', sched:'MWF 7:30–8:30',   room:'Rm 101', faculty:'Ms. A. Reyes' },
+    { code:'GE002', title:'Mathematics in the Modern World',       units:3, type:'Lec', sched:'MWF 8:30–9:30',   room:'Rm 101', faculty:'Mr. B. Santos' },
+    { code:'GE003', title:'Purposive Communication',               units:3, type:'Lec', sched:'TTH 7:30–9:00',   room:'Rm 102', faculty:'Ms. C. Lim' },
+    { code:'GE004', title:'Readings in Phil. History',             units:3, type:'Lec', sched:'TTH 9:00–10:30',  room:'Rm 103', faculty:'Mr. D. Cruz' },
+    { code:'GE005', title:'Science, Tech &amp; Society',           units:3, type:'Lec', sched:'MW 1:00–2:30',    room:'Rm 104', faculty:'Ms. E. Garcia' },
+    { code:'CS101', title:'Computer Fundamentals &amp; Prog. 1',   units:3, type:'Lec+Lab', sched:'TTH 1:00–3:00', room:'Lab 301', faculty:'Mr. F. Torres' },
+    { code:'PE001', title:'Physical Education 1',                  units:2, type:'PE',  sched:'F 3:00–5:00',     room:'Gym',    faculty:'Mr. G. Villanueva' },
+    { code:'NSTP01',title:'NSTP 1',                                units:3, type:'NSTP',sched:'SAT 7:00–10:00',  room:'Hall B', faculty:'NSTP Office' },
+  ],
+  '1b': [
+    { code:'GE001', title:'Understanding the Self',                units:3, type:'Lec', sched:'MWF 9:00–10:00',  room:'Rm 102', faculty:'Ms. A. Reyes' },
+    { code:'GE002', title:'Mathematics in the Modern World',       units:3, type:'Lec', sched:'MWF 10:00–11:00', room:'Rm 102', faculty:'Mr. B. Santos' },
+    { code:'GE003', title:'Purposive Communication',               units:3, type:'Lec', sched:'TTH 10:30–12:00', room:'Rm 105', faculty:'Ms. C. Lim' },
+    { code:'GE004', title:'Readings in Phil. History',             units:3, type:'Lec', sched:'TTH 1:00–2:30',   room:'Rm 106', faculty:'Mr. D. Cruz' },
+    { code:'GE005', title:'Science, Tech &amp; Society',           units:3, type:'Lec', sched:'MW 3:00–4:30',    room:'Rm 107', faculty:'Ms. E. Garcia' },
+    { code:'CS101', title:'Computer Fundamentals &amp; Prog. 1',   units:3, type:'Lec+Lab', sched:'TTH 3:00–5:00', room:'Lab 302', faculty:'Mr. F. Torres' },
+    { code:'PE001', title:'Physical Education 1',                  units:2, type:'PE',  sched:'W 4:30–6:00',     room:'Gym',    faculty:'Mr. G. Villanueva' },
+    { code:'NSTP01',title:'NSTP 1',                                units:3, type:'NSTP',sched:'SAT 7:00–10:00',  room:'Hall B', faculty:'NSTP Office' },
+  ],
+  '1c': [
+    { code:'GE001', title:'Understanding the Self',                units:3, type:'Lec', sched:'TTH 7:30–9:00',   room:'Rm 103', faculty:'Ms. A. Reyes' },
+    { code:'GE002', title:'Mathematics in the Modern World',       units:3, type:'Lec', sched:'TTH 9:00–10:30',  room:'Rm 103', faculty:'Mr. B. Santos' },
+    { code:'GE003', title:'Purposive Communication',               units:3, type:'Lec', sched:'MWF 7:30–8:30',   room:'Rm 108', faculty:'Ms. C. Lim' },
+    { code:'GE004', title:'Readings in Phil. History',             units:3, type:'Lec', sched:'MWF 8:30–9:30',   room:'Rm 109', faculty:'Mr. D. Cruz' },
+    { code:'GE005', title:'Science, Tech &amp; Society',           units:3, type:'Lec', sched:'TTH 1:00–2:30',   room:'Rm 110', faculty:'Ms. E. Garcia' },
+    { code:'CS101', title:'Computer Fundamentals &amp; Prog. 1',   units:3, type:'Lec+Lab', sched:'MWF 1:00–3:00', room:'Lab 303', faculty:'Mr. F. Torres' },
+    { code:'PE001', title:'Physical Education 1',                  units:2, type:'PE',  sched:'TH 3:00–5:00',    room:'Gym',    faculty:'Mr. G. Villanueva' },
+    { code:'NSTP01',title:'NSTP 1',                                units:3, type:'NSTP',sched:'SAT 7:00–10:00',  room:'Hall B', faculty:'NSTP Office' },
+  ]
+};
+
+function renderPreSched(secId) {
+  const tbody = document.getElementById('preSchedTbody');
+  const unitsEl = document.getElementById('preSchedUnits');
+  if (!tbody) return;
+  const subjects = sectionSchedules[secId] || [];
+  const totalUnits = subjects.reduce((s, r) => s + r.units, 0);
+  const typeColors = { 'Lec': 'info', 'Lec+Lab': 'info', 'PE': 'general', 'NSTP': 'general' };
+  tbody.innerHTML = subjects.map(s =>
+    `<tr>
+      <td style="font-weight:600;font-size:11.5px;color:var(--muted);">${s.code}</td>
+      <td>${s.title}</td>
+      <td>${s.units}</td>
+      <td><span class="tag ${typeColors[s.type] || 'info'}">${s.type}</span></td>
+      <td>${s.sched}</td>
+      <td>${s.room}</td>
+      <td>${s.faculty}</td>
+    </tr>`
+  ).join('');
+  if (unitsEl) unitsEl.textContent = totalUnits + ' units total';
+}
+
+const programLabels = {
+  bscs: 'BS Computer Science',
+  bsit: 'BS Information Technology',
+  bsba: 'BS Business Administration',
+  bsed: 'BS Education'
+};
+let selectedProgram = 'bscs';
+let selectedSec = { id: '1a', name: 'Block 1A', sched: 'MWF 7:30–9:00', adviser: 'Ms. A. Reyes' };
+
+function selectProgram(id) {
+  document.querySelectorAll('.enroll-prog-card').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('[id^="check-"]').forEach(el => el.style.display = 'none');
+  document.getElementById('prog-' + id).classList.add('selected');
+  document.getElementById('check-' + id).style.display = 'flex';
+  selectedProgram = id;
+  document.getElementById('summProgram').textContent = programLabels[id] || id;
+}
+
+function selectSection(id, name, sched, room, adviser, filled, total) {
+  document.querySelectorAll('.enroll-sec-card').forEach(el => {
+    el.classList.remove('selected');
+    const radio = el.querySelector('.enroll-sec-radio');
+    if (radio) radio.textContent = '';
+  });
+  const card = document.getElementById('sec-' + id);
+  if (!card) return;
+  card.classList.add('selected');
+  const radio = card.querySelector('.enroll-sec-radio');
+  if (radio) radio.textContent = '●';
+  selectedSec = { id, name, sched, adviser };
+  document.getElementById('summSection').textContent = name;
+  document.getElementById('summSchedule').textContent = sched;
+  document.getElementById('summAdviser').textContent = adviser;
+  renderPreSched(id);
+}
+
+function confirmEnrollment() {
+  const btn = document.getElementById('confirmEnrollBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg> Confirmed!';
+  btn.style.background = '#0a6651';
+
+  const badge = document.getElementById('enrollStatusBadge');
+  if (badge) {
+    badge.className = 'tag success';
+    badge.textContent = 'Section Selected';
+    badge.style.padding = '6px 14px';
+    badge.style.fontSize = '12px';
+    badge.style.borderRadius = '8px';
+  }
+
+  // Disable all section cards after confirm
+  document.querySelectorAll('.enroll-sec-card').forEach(el => {
+    el.style.pointerEvents = 'none';
+  });
+  document.querySelectorAll('.enroll-prog-card').forEach(el => {
+    el.style.pointerEvents = 'none';
+  });
+
+  showToast('Section ' + selectedSec.name + ' confirmed — awaiting registrar approval', 'success');
+}
+
+function resetEnrollment() {
+  // Re-enable cards
+  document.querySelectorAll('.enroll-sec-card:not([id="sec-1d"])').forEach(el => {
+    el.style.pointerEvents = '';
+  });
+  document.querySelectorAll('.enroll-prog-card').forEach(el => {
+    el.style.pointerEvents = '';
+  });
+  const btn = document.getElementById('confirmEnrollBtn');
+  btn.disabled = false;
+  btn.style.background = '#1a7a4a';
+  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg> Confirm Section';
+  const badge = document.getElementById('enrollStatusBadge');
+  if (badge) {
+    badge.className = 'tag warn';
+    badge.textContent = 'Section Not Yet Selected';
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 function confirmLogout() {
   closeModal('logoutModal');

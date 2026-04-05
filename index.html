@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ACTS Student Portal — Sign In</title>
+  <link rel="icon" type="image/png" href="image/logo.png">
   <link
     href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
     rel="stylesheet">
@@ -86,18 +87,19 @@
           </button>
         </form>
 
-        <div class="login-divider"><span>Demo Account</span></div>
+        <div class="login-divider"><span>Demo Accounts</span></div>
 
-        <!-- Demo account card -->
+        <!-- Demo account cards -->
         <div class="demo-wrap">
-          <div class="demo-card" onclick="fillDemo()" title="Click to autofill demo credentials">
+          <!-- Student demo -->
+          <div class="demo-card" onclick="fillDemo()" title="Click to autofill student demo credentials">
             <div class="demo-top">
               <div class="demo-avatar">JS</div>
               <div class="demo-info">
                 <strong>Juan S. Santos</strong>
                 <span>BSCS 3A · 3rd Year</span>
               </div>
-              <div class="demo-badge">Demo</div>
+              <div class="demo-badge">Student</div>
             </div>
             <div class="demo-creds">
               <div class="demo-cred">
@@ -116,7 +118,34 @@
               </div>
             </div>
           </div>
-          <div class="demo-hint">Click to autofill →</div>
+          <!-- Admin demo -->
+          <div class="demo-card" onclick="fillAdminDemo()" title="Click to autofill admin demo credentials" style="border-color:#d97a45;background:linear-gradient(135deg,#fff8f4 0%,#fff 100%);">
+            <div class="demo-top">
+              <div class="demo-avatar" style="background:linear-gradient(135deg,#d97a45,#b96538);">AD</div>
+              <div class="demo-info">
+                <strong>Admin Demo</strong>
+                <span>Portal Administrator</span>
+              </div>
+              <div class="demo-badge" style="background:#fff3ec;color:#d97a45;border:1px solid #f5c9ad;">Admin</div>
+            </div>
+            <div class="demo-creds">
+              <div class="demo-cred">
+                <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="10" cy="7" r="4" />
+                  <path d="M2 18c0-4 3.6-7 8-7s8 3 8 7" />
+                </svg>
+                ID: <span>admin</span>
+              </div>
+              <div class="demo-cred">
+                <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="4" y="9" width="12" height="9" rx="2" />
+                  <path d="M7 9V6a3 3 0 016 0v3" />
+                </svg>
+                Pass: <span>admin2024</span>
+              </div>
+            </div>
+          </div>
+          <div class="demo-hint">Click a card to autofill →</div>
         </div>
       </div>
 
@@ -179,6 +208,33 @@
       document.getElementById('errorMsg').classList.remove('show');
     }
 
+    // ═══════════════ ADMIN DEMO AUTOFILL ═══════════════
+    function fillAdminDemo() {
+      const idField = document.getElementById('studentId');
+      const passField = document.getElementById('password');
+      idField.value = '';
+      passField.value = '';
+      const demoId = 'admin';
+      const demoPass = 'admin2024';
+      let i = 0, j = 0;
+      function typeId() {
+        if (i < demoId.length) { idField.value += demoId[i++]; setTimeout(typeId, 45); }
+        else setTimeout(typePass, 150);
+      }
+      function typePass() {
+        if (j < demoPass.length) { passField.value += demoPass[j++]; setTimeout(typePass, 45); }
+        else {
+          document.getElementById('rememberMe').checked = false;
+          const btn = document.getElementById('loginBtn');
+          btn.style.boxShadow = '0 0 0 4px rgba(217,122,69,.25)';
+          setTimeout(() => btn.style.boxShadow = '', 800);
+        }
+      }
+      idField.focus();
+      setTimeout(typeId, 100);
+      document.getElementById('errorMsg').classList.remove('show');
+    }
+
     // ═══════════════ PASSWORD TOGGLE ═══════════════
     function togglePassword() {
       const passField = document.getElementById('password');
@@ -220,7 +276,17 @@
       // Simulate auth check
       setTimeout(() => {
         // Check demo credentials
-        if (id === '2024-00142' && pass === 'acts2024') {
+        if (id === 'admin' && pass === 'admin2024') {
+          // Admin — store session and redirect to admin panel
+          sessionStorage.setItem('acts_authenticated', 'admin');
+          sessionStorage.setItem('acts_user', JSON.stringify({
+            id: 'admin',
+            name: 'Admin Demo',
+            initials: 'AD',
+            role: 'Administrator'
+          }));
+          window.location.href = 'admin.html';
+        } else if (id === '2024-00142' && pass === 'acts2024') {
           // Success — store session and redirect
           sessionStorage.setItem('acts_authenticated', 'true');
           sessionStorage.setItem('acts_user', JSON.stringify({

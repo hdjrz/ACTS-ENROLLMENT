@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ACTS Student Portal</title>
+  <link rel="icon" type="image/png" href="image/logo.png">
   <link
     href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
     rel="stylesheet">
@@ -806,30 +807,31 @@
         <div class="page-head">
           <div class="page-head-left">
             <h2>Enrollment</h2>
-            <p>2nd Semester · S.Y. 2024–2025</p>
+            <p>1st Semester · S.Y. 2025–2026 · Freshman</p>
           </div>
-          <span class="tag success" style="padding:6px 14px;font-size:12px;border-radius:8px;">Officially
-            Enrolled</span>
+          <span class="tag warn" style="padding:6px 14px;font-size:12px;border-radius:8px;" id="enrollStatusBadge">Section Not Yet Selected</span>
         </div>
-        <div class="enroll-steps">
+
+        <!-- Steps -->
+        <div class="enroll-steps" style="margin-bottom:22px;">
           <div class="estep">
             <div class="estep-circle done">✓</div>
-            <div class="estep-text"><strong>Pre-enrollment</strong><span>Completed Mar 5</span></div>
+            <div class="estep-text"><strong>Pre-enrollment</strong><span>Completed</span></div>
           </div>
           <div class="estep-line done"></div>
           <div class="estep">
-            <div class="estep-circle done">✓</div>
-            <div class="estep-text"><strong>Assessment</strong><span>Completed Mar 7</span></div>
+            <div class="estep-circle active">2</div>
+            <div class="estep-text"><strong>Section Selection</strong><span>In progress</span></div>
           </div>
-          <div class="estep-line done"></div>
+          <div class="estep-line"></div>
           <div class="estep">
-            <div class="estep-circle done">✓</div>
-            <div class="estep-text"><strong>Payment</strong><span>50% paid</span></div>
+            <div class="estep-circle pending">3</div>
+            <div class="estep-text"><strong>Assessment</strong><span>Awaiting</span></div>
           </div>
-          <div class="estep-line done"></div>
+          <div class="estep-line"></div>
           <div class="estep">
-            <div class="estep-circle active">4</div>
-            <div class="estep-text"><strong>Validation</strong><span>In progress</span></div>
+            <div class="estep-circle pending">4</div>
+            <div class="estep-text"><strong>Payment</strong><span>Awaiting</span></div>
           </div>
           <div class="estep-line"></div>
           <div class="estep">
@@ -837,112 +839,175 @@
             <div class="estep-text"><strong>Fully Enrolled</strong><span>Awaiting</span></div>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
-          <div class="stat-card">
-            <div class="stat-top">
-              <div class="stat-icon blue"></div>
-            </div><span class="stat-val">7</span><span class="stat-label">Subjects Enrolled</span>
-          </div>
-          <div class="stat-card">
-            <div class="stat-top">
-              <div class="stat-icon red"></div>
-            </div><span class="stat-val">21</span><span class="stat-label">Total Units</span>
-          </div>
-          <div class="stat-card">
-            <div class="stat-top">
-              <div class="stat-icon green"></div>
-            </div><span class="stat-val" style="color:#1a7a4a;">Active</span><span class="stat-label">Enrollment
-              Status</span>
+
+        <!-- Info banner -->
+        <div style="background:var(--cream);border:1px solid var(--accent-soft);border-left:4px solid var(--red);border-radius:12px;padding:16px 20px;margin-bottom:22px;display:flex;align-items:flex-start;gap:13px;">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#b96538" stroke-width="1.8" style="flex-shrink:0;margin-top:1px;">
+            <circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 13v.5"/>
+          </svg>
+          <div>
+            <strong style="display:block;font-size:13px;color:var(--text);margin-bottom:3px;">Choose Your Section</strong>
+            <p style="font-size:12px;color:var(--muted);line-height:1.6;">As a new student, select your program and preferred section. Sections are assigned on a first-come, first-served basis. Once confirmed, your section can only be changed with a valid request to the Registrar.</p>
           </div>
         </div>
-        <div class="grades-table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Subject Title</th>
-                <th>Units</th>
-                <th>Type</th>
-                <th>Section</th>
-                <th>Schedule</th>
-                <th>Room</th>
-                <th>Faculty</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS311</td>
-                <td>Data Structures &amp; Algorithms</td>
-                <td>4</td>
-                <td><span class="tag info">Lec+Lab</span></td>
-                <td>3A</td>
-                <td>MWF 7:30–9:00</td>
-                <td>Rm 203 / Lab 301</td>
-                <td>Mr. Dela Cruz</td>
-              </tr>
-              <tr>
-                <td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS321</td>
-                <td>Software Engineering</td>
-                <td>3</td>
-                <td><span class="tag info">Lec</span></td>
-                <td>3A</td>
-                <td>MTWF 9:00–10:30</td>
-                <td>Rm 105</td>
-                <td>Ms. Reyes</td>
-              </tr>
-              <tr>
-                <td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS332</td>
-                <td>Database Management Systems</td>
-                <td>4</td>
-                <td><span class="tag info">Lec+Lab</span></td>
-                <td>3A</td>
-                <td>MTH 1:00–3:00</td>
-                <td>Lab 301</td>
-                <td>Mr. Santos</td>
-              </tr>
-              <tr>
-                <td style="font-weight:600;font-size:11.5px;color:var(--muted);">CS341</td>
-                <td>Computer Networks</td>
-                <td>3</td>
-                <td><span class="tag info">Lec</span></td>
-                <td>3A</td>
-                <td>WF 10:30–12:00</td>
-                <td>Rm 208</td>
-                <td>Ms. Lim</td>
-              </tr>
-              <tr>
-                <td style="font-weight:600;font-size:11.5px;color:var(--muted);">HUM201</td>
-                <td>Ethics in Technology</td>
-                <td>3</td>
-                <td><span class="tag general">GE</span></td>
-                <td>3A</td>
-                <td>TWF 3:00–4:30</td>
-                <td>Rm 412</td>
-                <td>Ms. Cruz</td>
-              </tr>
-              <tr>
-                <td style="font-weight:600;font-size:11.5px;color:var(--muted);">PE301</td>
-                <td>Physical Education 3</td>
-                <td>2</td>
-                <td><span class="tag general">GE</span></td>
-                <td>3A</td>
-                <td>M 4:30–6:00</td>
-                <td>Gym</td>
-                <td>Mr. Garcia</td>
-              </tr>
-              <tr>
-                <td style="font-weight:600;font-size:11.5px;color:var(--muted);">NSTP201</td>
-                <td>NSTP – CWTS 2</td>
-                <td>3</td>
-                <td><span class="tag general">NSTP</span></td>
-                <td>3A</td>
-                <td>SAT 7:00–10:00</td>
-                <td>Hall B</td>
-                <td>NSTP Office</td>
-              </tr>
-            </tbody>
-          </table>
+
+        <!-- Program selector -->
+        <div class="panel" style="margin-bottom:18px;">
+          <div class="panel-head"><span class="panel-title">Step 1 — Select Your Program</span></div>
+          <div style="padding:18px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="enroll-prog-card selected" id="prog-bscs" onclick="selectProgram('bscs')">
+              <div class="enroll-prog-icon" style="background:#e8f3fb;">💻</div>
+              <div>
+                <div class="enroll-prog-name">BS Computer Science</div>
+                <div class="enroll-prog-sub">BSCS · 4-year program</div>
+              </div>
+              <div class="enroll-prog-check" id="check-bscs">✓</div>
+            </div>
+            <div class="enroll-prog-card" id="prog-bsit" onclick="selectProgram('bsit')">
+              <div class="enroll-prog-icon" style="background:#f0ecfb;">🖥️</div>
+              <div>
+                <div class="enroll-prog-name">BS Information Technology</div>
+                <div class="enroll-prog-sub">BSIT · 4-year program</div>
+              </div>
+              <div class="enroll-prog-check" id="check-bsit" style="display:none;">✓</div>
+            </div>
+            <div class="enroll-prog-card" id="prog-bsba" onclick="selectProgram('bsba')">
+              <div class="enroll-prog-icon" style="background:#eaf7f0;">📊</div>
+              <div>
+                <div class="enroll-prog-name">BS Business Administration</div>
+                <div class="enroll-prog-sub">BSBA · 4-year program</div>
+              </div>
+              <div class="enroll-prog-check" id="check-bsba" style="display:none;">✓</div>
+            </div>
+            <div class="enroll-prog-card" id="prog-bsed" onclick="selectProgram('bsed')">
+              <div class="enroll-prog-icon" style="background:#fdf8e8;">📚</div>
+              <div>
+                <div class="enroll-prog-name">BS Education</div>
+                <div class="enroll-prog-sub">BSEd · 4-year program</div>
+              </div>
+              <div class="enroll-prog-check" id="check-bsed" style="display:none;">✓</div>
+            </div>
+          </div>
         </div>
+
+        <!-- Section selector -->
+        <div class="panel" style="margin-bottom:18px;">
+          <div class="panel-head"><span class="panel-title">Step 2 — Choose a Section</span><span style="font-size:11.5px;color:var(--muted);">1st Year · S.Y. 2025–2026</span></div>
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;" id="sectionList">
+
+            <div class="enroll-sec-card selected" id="sec-1a" onclick="selectSection('1a','Block 1A','MWF 7:30–9:00','Room 101','Ms. A. Reyes','38','40')">
+              <div class="enroll-sec-badge" style="background:var(--blue);color:#fff;">1A</div>
+              <div class="enroll-sec-info">
+                <div class="enroll-sec-name">Block 1A</div>
+                <div class="enroll-sec-meta">MWF 7:30–9:00 AM · Room 101 · Adviser: Ms. A. Reyes</div>
+              </div>
+              <div class="enroll-sec-slots">
+                <div class="enroll-sec-slot-bar"><div style="width:95%;background:var(--red);height:100%;border-radius:4px;"></div></div>
+                <div class="enroll-sec-slot-text" style="color:var(--red-dk);">38 / 40 slots</div>
+              </div>
+              <div class="enroll-sec-radio" id="radio-1a">●</div>
+            </div>
+
+            <div class="enroll-sec-card" id="sec-1b" onclick="selectSection('1b','Block 1B','MWF 9:00–10:30','Room 102','Mr. B. Santos','25','40')">
+              <div class="enroll-sec-badge" style="background:var(--blue-mid);color:#fff;">1B</div>
+              <div class="enroll-sec-info">
+                <div class="enroll-sec-name">Block 1B</div>
+                <div class="enroll-sec-meta">MWF 9:00–10:30 AM · Room 102 · Adviser: Mr. B. Santos</div>
+              </div>
+              <div class="enroll-sec-slots">
+                <div class="enroll-sec-slot-bar"><div style="width:62%;background:var(--blue);height:100%;border-radius:4px;"></div></div>
+                <div class="enroll-sec-slot-text">25 / 40 slots</div>
+              </div>
+              <div class="enroll-sec-radio" id="radio-1b"></div>
+            </div>
+
+            <div class="enroll-sec-card" id="sec-1c" onclick="selectSection('1c','Block 1C','TTH 7:30–9:00','Room 103','Ms. C. Lim','12','40')">
+              <div class="enroll-sec-badge" style="background:#1aac87;color:#fff;">1C</div>
+              <div class="enroll-sec-info">
+                <div class="enroll-sec-name">Block 1C</div>
+                <div class="enroll-sec-meta">TTH 7:30–9:00 AM · Room 103 · Adviser: Ms. C. Lim</div>
+              </div>
+              <div class="enroll-sec-slots">
+                <div class="enroll-sec-slot-bar"><div style="width:30%;background:#1aac87;height:100%;border-radius:4px;"></div></div>
+                <div class="enroll-sec-slot-text" style="color:#0a6651;">12 / 40 slots</div>
+              </div>
+              <div class="enroll-sec-radio" id="radio-1c"></div>
+            </div>
+
+            <div class="enroll-sec-card" id="sec-1d" onclick="selectSection('1d','Block 1D','TTH 1:00–3:00','Room 104','Mr. D. Cruz','40','40')" style="opacity:.55;pointer-events:none;">
+              <div class="enroll-sec-badge" style="background:var(--muted);color:#fff;">1D</div>
+              <div class="enroll-sec-info">
+                <div class="enroll-sec-name">Block 1D <span style="font-size:10.5px;color:var(--red-dk);font-weight:600;">FULL</span></div>
+                <div class="enroll-sec-meta">TTH 1:00–3:00 PM · Room 104 · Adviser: Mr. D. Cruz</div>
+              </div>
+              <div class="enroll-sec-slots">
+                <div class="enroll-sec-slot-bar"><div style="width:100%;background:var(--red);height:100%;border-radius:4px;"></div></div>
+                <div class="enroll-sec-slot-text" style="color:var(--red-dk);">40 / 40 slots</div>
+              </div>
+              <div class="enroll-sec-radio" id="radio-1d"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Selected summary + confirm -->
+        <div class="panel" id="enrollSummaryPanel">
+          <div class="panel-head"><span class="panel-title">Step 3 — Confirm Selection</span></div>
+          <div style="padding:18px 20px;">
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:18px;">
+              <div style="flex:1;min-width:160px;background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 16px;">
+                <div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Program</div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);" id="summProgram">BS Computer Science</div>
+              </div>
+              <div style="flex:1;min-width:160px;background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 16px;">
+                <div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Section</div>
+                <div style="font-size:13px;font-weight:600;color:var(--blue-dk);" id="summSection">Block 1A</div>
+              </div>
+              <div style="flex:1;min-width:160px;background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 16px;">
+                <div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Schedule</div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);" id="summSchedule">MWF 7:30–9:00</div>
+              </div>
+              <div style="flex:1;min-width:160px;background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 16px;">
+                <div style="font-size:10.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Adviser</div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);" id="summAdviser">Ms. A. Reyes</div>
+              </div>
+            </div>
+            <!-- Pre-assigned subject schedule -->
+            <div id="preSchedWrap" style="margin-bottom:18px;">
+              <div style="font-size:12px;font-weight:600;color:var(--blue-dk);margin-bottom:10px;display:flex;align-items:center;gap:7px;">
+                <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="var(--blue)" stroke-width="1.9"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M7 2v4M13 2v4M3 9h14"/></svg>
+                Pre-assigned Subjects for this Section
+                <span style="margin-left:auto;font-size:10.5px;font-weight:500;color:var(--muted);" id="preSchedUnits"></span>
+              </div>
+              <div class="grades-table-wrap" style="border-radius:10px;overflow:hidden;border:1px solid var(--border);">
+                <table id="preSchedTable">
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Subject Title</th>
+                      <th>Units</th>
+                      <th>Type</th>
+                      <th>Schedule</th>
+                      <th>Room</th>
+                      <th>Faculty</th>
+                    </tr>
+                  </thead>
+                  <tbody id="preSchedTbody">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;">
+              <button class="btn-outline" onclick="showToast('Selection cleared','success');resetEnrollment()">Clear</button>
+              <button class="btn-primary" id="confirmEnrollBtn" onclick="confirmEnrollment()" style="background:#1a7a4a;">
+                <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+                Confirm Section
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- ══════════════ SECTIONING ══════════════ -->
@@ -1106,20 +1171,44 @@
             </svg>Download COR</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid var(--blue);background:linear-gradient(135deg,#edf5fc 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon blue"></div><span class="stat-change neutral">21 units</span>
-            </div><span class="stat-val">7</span><span class="stat-label">Assigned Subjects</span>
+              <div class="stat-icon blue">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#2e78b8" stroke-width="1.7">
+                  <rect x="3" y="3" width="6" height="6" rx="1"/>
+                  <rect x="11" y="3" width="6" height="6" rx="1"/>
+                  <rect x="3" y="11" width="6" height="6" rx="1"/>
+                  <rect x="11" y="11" width="6" height="6" rx="1"/>
+                </svg>
+              </div>
+              <span class="stat-change neutral" style="background:#dbeeff;color:var(--blue-dk);">21 units</span>
+            </div>
+            <span class="stat-val" style="color:var(--blue);">7</span>
+            <span class="stat-label">Assigned Subjects</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #1a7a4a;background:linear-gradient(135deg,#eaf7f0 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon green"></div><span class="stat-change up">All clear</span>
-            </div><span class="stat-val">0</span><span class="stat-label">Pending Requirements</span>
+              <div class="stat-icon green" style="background:#c5ecdb;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="1.7">
+                  <path d="M4 10l4 4 8-8"/>
+                </svg>
+              </div>
+              <span class="stat-change up">All clear</span>
+            </div>
+            <span class="stat-val" style="color:#1a7a4a;">0</span>
+            <span class="stat-label">Pending Requirements</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid var(--red);background:linear-gradient(135deg,#fdf0e8 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon red"></div><span class="stat-change neutral">Total Earned</span>
-            </div><span class="stat-val">89</span><span class="stat-label">Cumulative Units</span>
+              <div class="stat-icon red" style="background:#faddc8;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#d97a45" stroke-width="1.7">
+                  <path d="M10 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 14.2l-4.8 2.7.9-5.4L2.2 7.7z"/>
+                </svg>
+              </div>
+              <span class="stat-change neutral" style="background:#fde8d5;color:var(--red-dk);">Total Earned</span>
+            </div>
+            <span class="stat-val" style="color:var(--red-dk);">89</span>
+            <span class="stat-label">Cumulative Units</span>
           </div>
         </div>
         <div class="subject-assign-grid">
@@ -1646,20 +1735,43 @@
             </svg>Search Catalog</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #1aac87;background:linear-gradient(135deg,#e0f5f0 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon blue"></div>
-            </div><span class="stat-val">3</span><span class="stat-label">Books Borrowed</span>
+              <div class="stat-icon" style="background:#b3e8dc;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#0a6651" stroke-width="1.7">
+                  <path d="M3 3h2v14H3zM15 3h2v14h-2zM5 5h10v10H5z"/>
+                  <path d="M8 8h4M8 11h4"/>
+                </svg>
+              </div>
+              <span class="stat-change" style="background:#c5ede4;color:#0a6651;">Currently Out</span>
+            </div>
+            <span class="stat-val" style="color:#0a6651;">3</span>
+            <span class="stat-label">Books Borrowed</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #1a7a4a;background:linear-gradient(135deg,#eaf7f0 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon green"></div>
-            </div><span class="stat-val">0</span><span class="stat-label">Late Returns</span>
+              <div class="stat-icon green" style="background:#c5ecdb;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="1.7">
+                  <path d="M4 10l4 4 8-8"/>
+                </svg>
+              </div>
+              <span class="stat-change up">Good standing</span>
+            </div>
+            <span class="stat-val" style="color:#1a7a4a;">0</span>
+            <span class="stat-label">Late Returns</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid var(--red);background:linear-gradient(135deg,#fdf0e8 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon red"></div>
-            </div><span class="stat-val">7</span><span class="stat-label">Days Left</span>
+              <div class="stat-icon red" style="background:#faddc8;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#d97a45" stroke-width="1.7">
+                  <rect x="2" y="4" width="16" height="14" rx="2"/>
+                  <path d="M6 2v4M14 2v4M2 9h16"/>
+                </svg>
+              </div>
+              <span class="stat-change warn">Due Apr 8</span>
+            </div>
+            <span class="stat-val" style="color:var(--red-dk);">7</span>
+            <span class="stat-label">Days Left</span>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
@@ -1783,93 +1895,150 @@
             <h2>Documents</h2>
             <p>Upload and track submission of required documents</p>
           </div>
-          <button class="btn-primary" onclick="document.getElementById('docUpload').click()"><svg width="13" height="13"
-              viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="10" y1="5" x2="10" y2="15" />
-              <line x1="5" y1="10" x2="15" y2="10" />
-            </svg>Upload Document</button>
-          <input type="file" id="docUpload" style="display:none;"
-            onchange="showToast('Document uploaded successfully','success')" />
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px;">
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #1a7a4a;background:linear-gradient(135deg,#eaf7f0 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon green"></div>
-            </div><span class="stat-val" style="color:#1a7a4a;">5</span><span class="stat-label">Approved</span>
+              <div class="stat-icon green" style="background:#c5ecdb;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="1.7">
+                  <path d="M4 10l4 4 8-8"/>
+                </svg>
+              </div>
+              <span class="stat-change up">All good</span>
+            </div>
+            <span class="stat-val" style="color:#1a7a4a;">5</span>
+            <span class="stat-label">Approved</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #c9a800;background:linear-gradient(135deg,#fdf8e8 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon yellow"></div>
-            </div><span class="stat-val" style="color:#7a6a1a;">2</span><span class="stat-label">Pending</span>
+              <div class="stat-icon yellow" style="background:#faecc0;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#7a6a1a" stroke-width="1.7">
+                  <circle cx="10" cy="10" r="8"/>
+                  <path d="M10 6v4l3 2"/>
+                </svg>
+              </div>
+              <span class="stat-change warn">Under review</span>
+            </div>
+            <span class="stat-val" style="color:#7a6a1a;">2</span>
+            <span class="stat-label">Pending</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid var(--red);background:linear-gradient(135deg,#fdf0e8 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon red"></div>
-            </div><span class="stat-val">1</span><span class="stat-label">Revisions Required</span>
+              <div class="stat-icon red" style="background:#faddc8;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#d97a45" stroke-width="1.7">
+                  <path d="M10 3l7 14H3L10 3zM10 9v4M10 15v.5"/>
+                </svg>
+              </div>
+              <span class="stat-change neutral" style="background:#faddc8;color:var(--red-dk);">Action needed</span>
+            </div>
+            <span class="stat-val" style="color:var(--red-dk);">1</span>
+            <span class="stat-label">Revisions Required</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid var(--blue);background:linear-gradient(135deg,#edf5fc 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon blue"></div>
-            </div><span class="stat-val">1</span><span class="stat-label">Not Yet Submitted</span>
+              <div class="stat-icon blue" style="background:#cde4f7;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#2e78b8" stroke-width="1.7">
+                  <path d="M14 2H6a1 1 0 00-1 1v14a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1z"/>
+                  <path d="M10 7h4M10 11h3M10 14h2"/>
+                </svg>
+              </div>
+              <span class="stat-change neutral" style="background:#dbeeff;color:var(--blue-dk);">Not submitted</span>
+            </div>
+            <span class="stat-val" style="color:var(--blue);">1</span>
+            <span class="stat-label">Not Yet Submitted</span>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div class="doc-card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
-              <div style="display:flex;align-items:center;gap:11px;">
-                <div
-                  style="width:36px;height:36px;background:#eaf7f0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">
-                  ✓</div>
-                <div>
-                  <div style="font-size:12.5px;font-weight:600;color:var(--text);">NSO Birth Certificate</div>
-                  <div style="font-size:11px;color:var(--muted);margin-top:1px;">Uploaded Mar 5</div>
-                </div>
-              </div>
-              <span class="tag success">Approved</span>
-            </div>
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">Required Documents</span>
+            <span style="font-size:11.5px;color:var(--muted);">Select a document row to upload</span>
           </div>
-          <div class="doc-card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
-              <div style="display:flex;align-items:center;gap:11px;">
-                <div
-                  style="width:36px;height:36px;background:#e8f3fb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">
-                  📝</div>
-                <div>
-                  <div style="font-size:12.5px;font-weight:600;color:var(--text);">Medical Clearance Form</div>
-                  <div style="font-size:11px;color:var(--muted);margin-top:1px;">Uploaded Feb 28</div>
-                </div>
-              </div>
-              <span class="tag success">Approved</span>
+
+          <!-- Form 138 -->
+          <div class="doc-row" id="docrow-form138">
+            <div class="doc-row-icon" style="background:#e8f3fb;">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#2e78b8" stroke-width="1.7"><path d="M14 2H6a1 1 0 00-1 1v14a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1z"/><path d="M8 7h4M8 10h4M8 13h2"/></svg>
             </div>
-          </div>
-          <div class="doc-card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
-              <div style="display:flex;align-items:center;gap:11px;">
-                <div
-                  style="width:36px;height:36px;background:#fdf8e8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">
-                  ⏳</div>
-                <div>
-                  <div style="font-size:12.5px;font-weight:600;color:var(--text);">Community Tax Certificate</div>
-                  <div style="font-size:11px;color:var(--muted);margin-top:1px;">Awaiting Review</div>
-                </div>
-              </div>
-              <span class="tag warn">Pending</span>
+            <div class="doc-row-info">
+              <div class="doc-row-name">Form 138 <span style="font-size:10px;color:var(--muted);font-weight:400;">(Report Card)</span></div>
+              <div class="doc-row-sub" id="docmeta-form138">Not yet submitted</div>
             </div>
+            <span class="tag general" id="doctag-form138" style="flex-shrink:0;">Not Submitted</span>
+            <button class="doc-upload-btn" onclick="document.getElementById('docfile-form138').click()">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15V5M5 9l5-5 5 5"/><path d="M3 17h14"/></svg>
+              Upload
+            </button>
+            <input type="file" id="docfile-form138" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="uploadDoc(this,'form138','Form 138')"/>
           </div>
-          <div class="doc-card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
-              <div style="display:flex;align-items:center;gap:11px;">
-                <div
-                  style="width:36px;height:36px;background:#fdf0e8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">
-                  ⚠️</div>
-                <div>
-                  <div style="font-size:12.5px;font-weight:600;color:var(--text);">Barangay Clearance</div>
-                  <div style="font-size:11px;color:#b96538;margin-top:1px;">Revisions needed</div>
-                </div>
-              </div>
-              <span class="tag urgent">Revisions</span>
+
+          <!-- PSA Birth Certificate -->
+          <div class="doc-row" id="docrow-psa">
+            <div class="doc-row-icon" style="background:#eaf7f0;">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="1.7"><path d="M14 2H6a1 1 0 00-1 1v14a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1z"/><path d="M8 7h4M8 10h4M8 13h2"/></svg>
             </div>
+            <div class="doc-row-info">
+              <div class="doc-row-name">PSA Birth Certificate</div>
+              <div class="doc-row-sub" id="docmeta-psa">Not yet submitted</div>
+            </div>
+            <span class="tag general" id="doctag-psa" style="flex-shrink:0;">Not Submitted</span>
+            <button class="doc-upload-btn" onclick="document.getElementById('docfile-psa').click()">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15V5M5 9l5-5 5 5"/><path d="M3 17h14"/></svg>
+              Upload
+            </button>
+            <input type="file" id="docfile-psa" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="uploadDoc(this,'psa','PSA Birth Certificate')"/>
           </div>
+
+          <!-- Good Moral Certificate -->
+          <div class="doc-row" id="docrow-goodmoral">
+            <div class="doc-row-icon" style="background:#f0ecfb;">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#7c5cbf" stroke-width="1.7"><path d="M3 8l7-4 7 4v2c0 3-2 5-7 6-5-1-7-3-7-6V8z"/><path d="M7 11l2 2 4-4"/></svg>
+            </div>
+            <div class="doc-row-info">
+              <div class="doc-row-name">Good Moral Certificate</div>
+              <div class="doc-row-sub" id="docmeta-goodmoral">Not yet submitted</div>
+            </div>
+            <span class="tag general" id="doctag-goodmoral" style="flex-shrink:0;">Not Submitted</span>
+            <button class="doc-upload-btn" onclick="document.getElementById('docfile-goodmoral').click()">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15V5M5 9l5-5 5 5"/><path d="M3 17h14"/></svg>
+              Upload
+            </button>
+            <input type="file" id="docfile-goodmoral" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="uploadDoc(this,'goodmoral','Good Moral Certificate')"/>
+          </div>
+
+          <!-- 2x2 ID Picture -->
+          <div class="doc-row" id="docrow-id2x2">
+            <div class="doc-row-icon" style="background:#fdf8e8;">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#7a6a1a" stroke-width="1.7"><rect x="3" y="4" width="14" height="12" rx="2"/><circle cx="10" cy="9" r="3"/><path d="M5 16c0-2.8 2.2-4 5-4s5 1.2 5 4"/></svg>
+            </div>
+            <div class="doc-row-info">
+              <div class="doc-row-name">2×2 ID Picture <span style="font-size:10px;color:var(--muted);font-weight:400;">(white bg, formal)</span></div>
+              <div class="doc-row-sub" id="docmeta-id2x2">Not yet submitted</div>
+            </div>
+            <span class="tag general" id="doctag-id2x2" style="flex-shrink:0;">Not Submitted</span>
+            <button class="doc-upload-btn" onclick="document.getElementById('docfile-id2x2').click()">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15V5M5 9l5-5 5 5"/><path d="M3 17h14"/></svg>
+              Upload
+            </button>
+            <input type="file" id="docfile-id2x2" accept=".jpg,.jpeg,.png" style="display:none;" onchange="uploadDoc(this,'id2x2','2×2 ID Picture')"/>
+          </div>
+
+          <!-- Medical Certificate -->
+          <div class="doc-row" id="docrow-medcert">
+            <div class="doc-row-icon" style="background:#fdf0e8;">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#d97a45" stroke-width="1.7"><path d="M10 4v12M4 10h12"/><rect x="3" y="3" width="14" height="14" rx="2"/></svg>
+            </div>
+            <div class="doc-row-info">
+              <div class="doc-row-name">Medical Certificate</div>
+              <div class="doc-row-sub" id="docmeta-medcert">Not yet submitted</div>
+            </div>
+            <span class="tag general" id="doctag-medcert" style="flex-shrink:0;">Not Submitted</span>
+            <button class="doc-upload-btn" onclick="document.getElementById('docfile-medcert').click()">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15V5M5 9l5-5 5 5"/><path d="M3 17h14"/></svg>
+              Upload
+            </button>
+            <input type="file" id="docfile-medcert" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="uploadDoc(this,'medcert','Medical Certificate')"/>
+          </div>
+
         </div>
       </div>
 
@@ -1882,21 +2051,43 @@
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-bottom:20px;">
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid var(--blue);background:linear-gradient(135deg,#edf5fc 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon blue"></div>
-            </div><span class="stat-val">1.85</span><span class="stat-label">Cumulative GWA</span>
+              <div class="stat-icon blue" style="background:#cde4f7;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#2e78b8" stroke-width="1.7">
+                  <path d="M6 2h8l3 3v13H3V3a1 1 0 011-1z"/>
+                  <path d="M6 9h8M6 13h5"/>
+                </svg>
+              </div>
+              <span class="stat-change neutral" style="background:#dbeeff;color:var(--blue-dk);">Dean's List</span>
+            </div>
+            <span class="stat-val" style="color:var(--blue);">1.85</span>
+            <span class="stat-label">Cumulative GWA</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #1a7a4a;background:linear-gradient(135deg,#eaf7f0 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon green"></div>
-            </div><span class="stat-val" style="color:#1a7a4a;">Dean's List</span><span class="stat-label">Current
-              Honors</span>
+              <div class="stat-icon green" style="background:#c5ecdb;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="1.7">
+                  <path d="M10 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 14.2l-4.8 2.7.9-5.4L2.2 7.7z"/>
+                </svg>
+              </div>
+              <span class="stat-change up">Active</span>
+            </div>
+            <span class="stat-val" style="color:#1a7a4a;">Dean's List</span>
+            <span class="stat-label">Current Honors</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #7c5cbf;background:linear-gradient(135deg,#f0ecfb 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon purple"></div>
-            </div><span class="stat-val">89</span><span class="stat-label">Cumulative Units</span>
+              <div class="stat-icon purple" style="background:#e0d5f8;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#7c5cbf" stroke-width="1.7">
+                  <path d="M3 8l7-4 7 4v2c0 3-2 5-7 6-5-1-7-3-7-6V8z"/>
+                  <circle cx="10" cy="12" r="3"/>
+                </svg>
+              </div>
+              <span class="stat-change neutral" style="background:#e0d5f8;color:#4a2e8c;">of 180 total</span>
+            </div>
+            <span class="stat-val" style="color:#7c5cbf;">89</span>
+            <span class="stat-label">Cumulative Units</span>
           </div>
         </div>
         <div class="two-col">
@@ -2020,21 +2211,44 @@
             </svg>Apply for Aid</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px;">
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #1a7a4a;background:linear-gradient(135deg,#eaf7f0 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon green"></div>
-            </div><span class="stat-val" style="color:#1a7a4a;">₱1,680</span><span
-              class="stat-label">Discount/Semester</span>
+              <div class="stat-icon green" style="background:#c5ecdb;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#1a7a4a" stroke-width="1.7">
+                  <circle cx="10" cy="10" r="8"/>
+                  <path d="M10 6v8M7 8.5c0-1.4 1.3-2.5 3-2.5s3 1.1 3 2.5S11.7 11 10 11s-3 1.1-3 2.5S8.3 16 10 16s3-1.1 3-2.5"/>
+                </svg>
+              </div>
+              <span class="stat-change up">Per semester</span>
+            </div>
+            <span class="stat-val" style="color:#1a7a4a;">₱1,680</span>
+            <span class="stat-label">Discount/Semester</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid var(--blue);background:linear-gradient(135deg,#edf5fc 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon blue"></div>
-            </div><span class="stat-val">₱3,360</span><span class="stat-label">Total Aid Received</span>
+              <div class="stat-icon blue" style="background:#cde4f7;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#2e78b8" stroke-width="1.7">
+                  <rect x="2" y="5" width="16" height="12" rx="2"/>
+                  <path d="M2 9h16M6 13h2"/>
+                </svg>
+              </div>
+              <span class="stat-change neutral" style="background:#dbeeff;color:var(--blue-dk);">2 semesters</span>
+            </div>
+            <span class="stat-val" style="color:var(--blue);">₱3,360</span>
+            <span class="stat-label">Total Aid Received</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" style="border-top:3px solid #7c5cbf;background:linear-gradient(135deg,#f0ecfb 0%,var(--white) 60%);">
             <div class="stat-top">
-              <div class="stat-icon purple"></div>
-            </div><span class="stat-val">10%</span><span class="stat-label">Current Coverage</span>
+              <div class="stat-icon purple" style="background:#e0d5f8;">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#7c5cbf" stroke-width="1.7">
+                  <path d="M3 8l7-4 7 4v2c0 3-2 5-7 6-5-1-7-3-7-6V8z"/>
+                  <circle cx="10" cy="12" r="3"/>
+                </svg>
+              </div>
+              <span class="stat-change neutral" style="background:#e0d5f8;color:#4a2e8c;">Academic Merit</span>
+            </div>
+            <span class="stat-val" style="color:#7c5cbf;">10%</span>
+            <span class="stat-label">Current Coverage</span>
           </div>
         </div>
         <div class="two-col">
