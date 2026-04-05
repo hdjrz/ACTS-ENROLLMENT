@@ -152,17 +152,32 @@ function showToast(msg, type = 'success') {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
 }
 
+// ═══════════════ MODAL HELPERS ═══════════════
+function openModal(id) {
+  document.getElementById(id).classList.add('show');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
 // ═══════════════ LOGOUT ═══════════════
 function handleLogout() {
+  openModal('logoutModal');
+}
+
+function confirmLogout() {
+  closeModal('logoutModal');
   const loader = document.getElementById('loading-screen');
   loader.querySelector('.loader-status').textContent = 'Signing out securely…';
   document.getElementById('loaderBar').style.width = '100%';
+  loader.style.display = '';
   loader.style.opacity = '1';
   loader.style.visibility = 'visible';
   loader.classList.remove('fade-out');
   setTimeout(() => {
     sessionStorage.removeItem('acts_authenticated');
     sessionStorage.removeItem('acts_user');
-    window.location.href = 'login.html';
+    loader.classList.add('fade-out');
+    window.location.href = 'index.html';
   }, 1200);
 }
