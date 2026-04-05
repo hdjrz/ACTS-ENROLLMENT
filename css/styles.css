@@ -182,7 +182,7 @@ body {
 /* ── SIDEBAR ── */
 .sidebar {
   width: 264px;
-  min-height: 100vh;
+  height: 100vh;
   background: var(--blue-dk);
   display: flex;
   flex-direction: column;
@@ -2305,13 +2305,24 @@ tbody td {
 }
 
 /* ── RESPONSIVE ── */
-@media(max-width:1100px) {
+
+/* Tablet landscape / small desktop */
+@media (max-width: 1100px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .schedule-week {
+    grid-template-columns: 54px repeat(5, 1fr);
+  }
+
+  .subject-assign-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-@media(max-width:960px) {
+/* Tablet portrait */
+@media (max-width: 960px) {
   .sidebar {
     transform: translateX(-100%);
   }
@@ -2335,8 +2346,412 @@ tbody td {
   .hamburger {
     display: flex !important;
   }
+
+  .content {
+    padding: 20px 18px;
+  }
+
+  .topbar {
+    padding: 0 18px;
+  }
+
+  .welcome-banner {
+    padding: 22px 20px;
+  }
+
+  .welcome-text h2 {
+    font-size: 18px;
+  }
+
+  .gpa-highlight {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .gpa-meta {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+
+  .tuition-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 20px;
+  }
+
+  .tuition-badges {
+    width: 100%;
+  }
+
+  .tbadge {
+    flex: 1;
+  }
+
+  .enroll-steps {
+    padding: 16px 18px;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .section-badge {
+    flex-wrap: wrap;
+    padding: 14px 18px;
+  }
+
+  .eval-prof-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .eval-done-badge,
+  .eval-pending-badge {
+    margin-left: 0;
+  }
 }
 
+/* Large phones */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content {
+    padding: 16px 14px;
+  }
+
+  .topbar {
+    padding: 0 14px;
+    height: 56px;
+  }
+
+  .page-title {
+    font-size: 14px;
+  }
+
+  .semester-pill {
+    display: none;
+  }
+
+  .welcome-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 18px;
+  }
+
+  .welcome-text h2 {
+    font-size: 17px;
+  }
+
+  .welcome-badge {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .welcome-badge .big-label {
+    margin-top: 0;
+  }
+
+  .schedule-week {
+    grid-template-columns: 48px repeat(5, 1fr);
+    font-size: 10px;
+  }
+
+  .week-header {
+    padding: 8px 3px;
+    font-size: 9px;
+  }
+
+  .time-cell {
+    padding: 6px 3px;
+    font-size: 9px;
+  }
+
+  .class-block {
+    padding: 3px 5px;
+    font-size: 9px;
+  }
+
+  .schedule-item {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .sched-time {
+    min-width: 65px;
+    font-size: 10.5px;
+  }
+
+  .annc-item {
+    padding: 12px 14px;
+  }
+
+  .field-group {
+    grid-template-columns: 1fr;
+    padding: 14px 16px;
+  }
+
+  .pay-item {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .fee-row {
+    padding: 11px 14px;
+  }
+
+  .tuition-left .total-amt {
+    font-size: 30px;
+  }
+
+  .gpa-num {
+    font-size: 36px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Tables: horizontal scroll */
+  .grades-table-wrap,
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  thead th,
+  tbody td {
+    padding: 10px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .modal-card {
+    width: 92vw;
+    border-radius: 14px;
+  }
+
+  .page-head {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .content {
+    padding: 14px 10px;
+  }
+
+  .topbar {
+    padding: 0 10px;
+    height: 52px;
+  }
+
+  .topbar-right {
+    gap: 6px;
+  }
+
+  .topbar-icon-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .topbar-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .page-title {
+    font-size: 13px;
+  }
+
+  .welcome-banner {
+    padding: 16px 14px;
+    border-radius: 12px;
+  }
+
+  .welcome-text h2 {
+    font-size: 15px;
+  }
+
+  .welcome-text p {
+    font-size: 12px;
+  }
+
+  .stat-card {
+    padding: 14px 15px;
+  }
+
+  .stat-val {
+    font-size: 22px;
+  }
+
+  .panel-head {
+    padding: 13px 14px 11px;
+  }
+
+  .schedule-item {
+    padding: 9px 12px;
+  }
+
+  .sched-room {
+    display: none;
+  }
+
+  .annc-item {
+    padding: 11px 12px;
+  }
+
+  .tuition-left .total-amt {
+    font-size: 26px;
+  }
+
+  .tuition-badges {
+    flex-direction: column;
+  }
+
+  .tbadge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    text-align: left;
+  }
+
+  .gpa-num {
+    font-size: 30px;
+  }
+
+  .gpa-highlight {
+    padding: 18px 16px;
+  }
+
+  .enroll-steps {
+    padding: 14px 12px;
+  }
+
+  .estep-text strong {
+    font-size: 11px;
+  }
+
+  .estep-text span {
+    font-size: 9.5px;
+  }
+
+  .eval-card {
+    padding: 16px 14px;
+  }
+
+  .eval-criteria {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .pay-item {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .pay-right {
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+  }
+
+  .profile-banner {
+    height: 64px;
+  }
+
+  .profile-avatar {
+    width: 58px;
+    height: 58px;
+    font-size: 18px;
+  }
+
+  .modal-card {
+    width: 95vw;
+    border-radius: 12px;
+  }
+
+  .modal-body {
+    padding: 18px 18px 6px;
+  }
+
+  .modal-body h3 {
+    font-size: 15px;
+  }
+
+  .modal-actions {
+    padding: 14px 18px 18px;
+  }
+
+  .modal-btn {
+    padding: 9px 16px;
+    font-size: 12.5px;
+  }
+
+  .contact-tabs {
+    width: 100%;
+  }
+
+  .ctab {
+    flex: 1;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .settings-tabs {
+    width: 100%;
+  }
+
+  .stab {
+    flex: 1;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .demo-creds {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .classmate-card {
+    padding: 9px 10px;
+  }
+
+  .page-head-left h2 {
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .btn-outline {
+    padding: 7px 12px;
+    font-size: 11.5px;
+  }
+}
+
+/* ── Base elements ── */
 .hamburger {
   display: none;
   align-items: center;

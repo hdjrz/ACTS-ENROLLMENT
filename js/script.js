@@ -70,12 +70,14 @@ function showView(id, navEl) {
 
 // ═══════════════ SIDEBAR ═══════════════
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
+  const isOpen = document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('overlay').classList.toggle('show');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow = '';
 }
 
 // ═══════════════ STAR RATINGS ═══════════════
